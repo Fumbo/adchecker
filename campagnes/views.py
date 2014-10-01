@@ -1,14 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from auchan.models import Drive
+from campagnes.models import Drive
 
 
 # Create your views here.
 def index(request):
-    auchan_drives_list = Drive.objects.all()
-    context = {'auchan_drives_list': auchan_drives_list}
-    return render(request, 'auchan/index.html', context)
+    campagnes_drives_list = Drive.objects.all()
+    context = {'campagnes_drives_list': campagnes_drives_list}
+    return render(request, 'campagnes/index.html', context)
 
 
 def detail(request, drive_id):

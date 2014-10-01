@@ -3,22 +3,22 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Auchan Drives</title>
+    <title>Campagnes Drives</title>
 
     <!-- Bootstrap -->
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
 </head>
 <body>
-{% if auchan_drives_list %}
+{% if campagnes_drives_list %}
     <div class='container-fluid'>
-        {% for drive in auchan_drives_list %}
+        {% for drive in campagnes_drives_list %}
         <div class='raw text-center'>
             <h1>{{ drive }}</h1>
         </div>
             {% for i in "0123" %}
             <div class='raw'>
                 <div class='col-md-3'>
-                    <img src='{% static "auchan/" %}{{drive}}-{{i}}.jpg' class='img-responsive img-thumbnail' />
+                    <img src='{% static "campagnes/" %}{{drive}}-{{i}}.jpg' class='img-responsive img-thumbnail' />
                 </div>
             </div>
             {% endfor %}

@@ -5,6 +5,6 @@ urlpatterns = patterns('',
                        # Examples:
                        # url(r'^$', 'advchecker.views.home', name='home'),
 
-                       url(r'^auchan/', include('auchan.urls')),
+                       url(r'^campagnes/', include('campagnes.urls')),
                        url(r'^admin/', include(admin.site.urls)),
                        )
