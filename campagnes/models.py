@@ -11,7 +11,7 @@ class Enseigne(models.Model):
         return "%s" % self.nom
 
 
-class Drive(models.Model):
+class Magasin(models.Model):
     enseigne = models.ForeignKey(Enseigne)
     ville = models.CharField(max_length=30)
     identifiant = models.PositiveSmallIntegerField(unique=True)

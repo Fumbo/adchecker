@@ -1,0 +1,68 @@
+{% load advchecker_extras %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Liste des enseignes - Overview</title>
+
+<!-- Bootstrap -->
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+</head>
+<body>
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Advertising Checker</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">All</a></li>
+                {% if campagnes_enseigne_list %}
+                {{campagne_enseigne_list}}
+                {% for enseigne in campagnes_enseigne_list %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{enseigne}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                        {% if campagnes_magasin_list|get_item:enseigne %}
+                        <li><a href="#">Tous</a></li>
+                        <li class="divider"></li>
+                        {% for magasin in campagnes_magasin_list|get_item:enseigne %}
+                            <li><a href="#">{{magasin}}</a></li>
+                        {% endfor %}
+                        {% else %}
+                        <li role="presentation" class="disabled">
+                        <a role="menuitem" tabindex="-1" href="#">Aucun magasin pour cette enseigne</a>
+                        </li>
+                        {% endif %}
+                        </ul>
+                </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+            <a href="/admin">
+                <button type="button" class="btn btn-default navbar-right navbar-btn">
+                    <span class="glyphicon glyphicon-cog"></span> Administation
+                </button>
+            </a>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</div> <!-- navbar -->
+{% if campagnes_magasin_list %}
+<div class='container-fluid'>
+    {% for enseigne, magasin in campagnes_magasin_list %}
+    <div class='raw text-center'>
+        <h1>{{ enseigne }}</h1>
+        <h1>{{ magasin }}</h1>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No drive are available.</p>
+{% endif %}
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+</body>
+</html>
