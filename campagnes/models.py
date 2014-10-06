@@ -1,10 +1,18 @@
 from django.db import models
 
-# Create your models here.
+
+class Campagne(models.Model):
+    nom = models.CharField(max_length=50)
+    annonceur = models.CharField(max_length=50)
+    date_debut = models.DateField()
+    date_fin = models.DateField()
+
+    def __str__(self):
+        return "%s" % self.nom
 
 
 class Enseigne(models.Model):
-    nom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=50)
     url = models.URLField()
 
     def __str__(self):
@@ -21,4 +29,12 @@ class Magasin(models.Model):
         ordering = ['enseigne']
 
     def __str__(self):
-        return "%s-%s" % (self.ville, self.identifiant)
+        return "%s" % self.ville
+
+
+class Rayon(models.Model):
+    nom = models.CharField(max_length=50)
+    parent = models.ForeignKey('self', blank=True, null=True)
+
+    def __str__(self):
+        return "%s" % self.nom
