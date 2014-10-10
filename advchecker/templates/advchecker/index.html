@@ -1,5 +1,6 @@
 {% load advchecker_extras %}
 {% load staticfiles %}
+{% load screamshot %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,7 @@
 
 <!-- Bootstrap -->
 <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "css/style.css" %}" rel="stylesheet">
 </head>
 <body>
 <div class="navbar navbar-default navbar-static-top" role="navigation">
@@ -48,18 +50,7 @@
         </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->
 </div> <!-- navbar -->
-{% if campagnes_magasin_list %}
-<div class='container-fluid'>
-    {% for enseigne, magasin in campagnes_magasin_list %}
-    <div class='raw text-center'>
-        <h1>{{ enseigne }}</h1>
-        <h1>{{ magasin }}</h1>
-    </div>
-    {% endfor %}
-</div>
-{% else %}
-<p>No drive are available.</p>
-{% endif %}
+<img id="imagemap" src="data:{% base64capture "http://auchandrive.fr/drive/Plaisir-918/" "body" %}" width="640" />
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

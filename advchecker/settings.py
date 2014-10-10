@@ -37,7 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'campagnes',
-    'advchecker'
+    'advchecker',
+    'screamshot',
 )
 
 MIDDLEWARE_CLASSES = (
