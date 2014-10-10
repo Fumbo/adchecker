@@ -11,6 +11,7 @@ class Campagne(models.Model):
         return "%s" % self.nom
 
 
+
 class Enseigne(models.Model):
     nom = models.CharField(max_length=50)
     url = models.URLField()
