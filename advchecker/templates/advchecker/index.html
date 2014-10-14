@@ -1,6 +1,5 @@
 {% load advchecker_extras %}
 {% load staticfiles %}
-{% load screamshot %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,10 +49,33 @@
         </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->
 </div> <!-- navbar -->
-<img id="imagemap" src="data:{% base64capture "http://auchandrive.fr/drive/Plaisir-918/" "body" %}" width="640" />
-
+<div class='container-fluid'>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Enseigne</th>
+                <th>Zone de l'image</th>
+                <th>Resultat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="test1">
+                <th>1</th>
+                <th>Auchan</th>
+                <th>Carousel</th>
+                <th>
+                    <img id="loading" src="{% static "images/loading-mini.gif" %}" />
+                    <span id="test1-good" class="glyphicon glyphicon-ok" style="display: none"/>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="{% static "js/bootstrap.min.js" %}"></script>
+<script src="{% static "js/resemble.js" %}"></script>
+<script src="{% static "js/compare-img.js" %}"></script>
 </body>
 </html>
