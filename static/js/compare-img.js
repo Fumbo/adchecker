@@ -1,10 +1,11 @@
-$( "#loading" ).click(function() {
+function GoTest(current) {
     resemble('/static/images/loading-mini.gif').compareTo('/static/images/loading-mini.gif').ignoreColors().onComplete(function(data){
         console.log(data);
+        id = current.attr('id');
         if(data.misMatchPercentage == 0){
-            $('#test1-good').show();
-            $('#test1').addClass('success')
-            $('#loading').hide();
+            $('#loading-'+id).hide();
+            $('#test'+id+'-good').show();
+            $('#'+id).addClass('success')
         }
         /*
            {
@@ -15,4 +16,8 @@ $( "#loading" ).click(function() {
            }
            */
     });
+};
+
+$(".test").click(function() {
+    GoTest($(this));
 });

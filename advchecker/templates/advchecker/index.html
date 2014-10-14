@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Liste des enseignes - Overview</title>
+<title>{% block title %}Liste des enseignes - Overview{% endblock %}</title>
 
 <!-- Bootstrap -->
 <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
@@ -14,10 +14,11 @@
 <div class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Advertising Checker</a>
+            <a class="navbar-brand" href="/">Advertising Checker</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+            {% block menu %}
                 <li class="active"><a href="#">All</a></li>
                 {% if campagnes_enseigne_list %}
                 {{campagne_enseigne_list}}
@@ -40,6 +41,7 @@
                 </li>
                 {% endfor %}
                 {% endif %}
+            {% endblock %}
             </ul>
             <a href="/admin">
                 <button type="button" class="btn btn-default navbar-right navbar-btn">
@@ -50,6 +52,7 @@
     </div><!--/.container-fluid -->
 </div> <!-- navbar -->
 <div class='container-fluid'>
+{% block content %}
     <table class="table table-hover">
         <thead>
             <tr>
@@ -60,17 +63,36 @@
             </tr>
         </thead>
         <tbody>
-            <tr id="test1">
+            <tr id="1" class="test">
                 <th>1</th>
                 <th>Auchan</th>
-                <th>Carousel</th>
+                <th>Carrousel</th>
                 <th>
-                    <img id="loading" src="{% static "images/loading-mini.gif" %}" />
+                    <img id="loading-1" src="{% static "images/loading-mini.gif" %}" />
                     <span id="test1-good" class="glyphicon glyphicon-ok" style="display: none"/>
+                </th>
+            </tr>
+            <tr id="2" class="test">
+                <th>2</th>
+                <th>Auchan</th>
+                <th>Tata</th>
+                <th>
+                    <img id="loading-2" src="{% static "images/loading-mini.gif" %}" />
+                    <span id="test2-good" class="glyphicon glyphicon-ok" style="display: none"/>
+                </th>
+            </tr>
+            <tr id="3" class="test">
+                <th>3</th>
+                <th>Auchan</th>
+                <th>YoYo</th>
+                <th>
+                    <img id="loading-3" src="{% static "images/loading-mini.gif" %}" />
+                    <span id="test3-good" class="glyphicon glyphicon-ok" style="display: none"/>
                 </th>
             </tr>
         </tbody>
     </table>
+{% endblock %}
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

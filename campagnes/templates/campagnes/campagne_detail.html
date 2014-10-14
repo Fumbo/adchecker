@@ -3,10 +3,14 @@
 
 {% block menu %}
 
-<li class="active"><a href="#">All</a></li>
+<li><a href="/campagnes/">All</a></li>
 {% if campagne_list %}
 {% for campagne in campagne_list %}
-    <li><a href="/campagnes/{{campagne.id}}/">{{campagne}}</a></li>
+    {% ifequal campagne.id current_id %}
+        <li  class="active"><a href="/campagnes/{{campagne.id}}/">{{campagne}}</a></li>
+    {% else %}
+        <li><a href="/campagnes/{{campagne.id}}/">{{campagne}}</a></li>
+    {% endifequal %}
 {% endfor %}
 {% endif %}
 
@@ -29,12 +33,14 @@
         </thead>
         <tbody>
             {% for campagne in campagne_list %}
-                <tr>
+            {% ifequal campagne.id current_id %}
+                <tr id="test1">
                     <th>{{campagne.id}}</th>
                     <th>{{campagne.annonceur}}</th>
                     <th>{{campagne.date_debut}}</th>
                     <th>{{campagne.date_fin}}</th>
                 </tr>
+            {% endifequal %}
             {% endfor %}
         </tbody>
     </table>

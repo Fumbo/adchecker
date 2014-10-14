@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, url
 
-from campagnes import views
+from views import CampagnesAll, CampagnesDetail
 
 urlpatterns = patterns('',
-                       url(r'^$', views.index, name='index'),
-                       url(r'^(?P<drive_id>\d+)/$', views.detail, name='detail'),
+                       url(r'^$', CampagnesAll.as_view(), name='index'),
+                       url(r'^(?P<campagne_id>\d+)/$', CampagnesDetail.as_view(), name='detail'),
                        )
