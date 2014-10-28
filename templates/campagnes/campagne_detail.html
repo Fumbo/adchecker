@@ -3,7 +3,7 @@
 
 {% block menu %}
 
-<li><a href="/campagnes/">All</a></li>
+<li><a href="/campagnes">All</a></li>
 {% if campagne_list %}
 {% for campagne in campagne_list %}
     {% ifequal campagne.id current_id %}
