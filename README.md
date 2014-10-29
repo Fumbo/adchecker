@@ -9,8 +9,10 @@ Dependency
 
 Install needed package using pip then launch :
 
-`pip install Django
+```
+pip install Django
 pip install Django-suit
 pip install nose
 pip install needle
-pip install nose-sneeze`
+pip install nose-sneeze
+```
