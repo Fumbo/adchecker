@@ -7,7 +7,7 @@ learn the basics of Django and try to make some concrete app
 Dependency
 ==========
 
-Install needed package using pip then launch :
+Install theses needed packages using pip with :
 
 ```
 pip install Django
