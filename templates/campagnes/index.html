@@ -1,46 +1,51 @@
-{% extends "advchecker/index.html" %}
-{% load staticfiles %}
+{% extends "base.html" %}
+
+{% block title %}Campagnes{% endblock %}
 
 {% block menu %}
-
-<li class="active"><a href="#">All</a></li>
-{% if campagne_list %}
-{% for campagne in campagne_list %}
-    <li><a href="/campagnes/{{campagne.id}}/">{{campagne}}</a></li>
-{% endfor %}
-{% endif %}
-
+    <li class="active"><a href="#">All</a></li>
+    {% if campagne_list %}
+        {% for campagne in campagne_list %}
+            <li><a href="/campagnes/{{ campagne.id }}/">{{ campagne }}</a></li>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
-
+{% block menu-right-btn %}
+    <a href="/logout">
+        <button type="button" class="btn btn-default navbar-btn">
+            <span class="glyphicon glyphicon-log-out"></span> Logout
+        </button>
+    </a>
+{% endblock %}
 
 
 {% block content %}
 
-{% if campagne_list %}
-    <table class="table table-hover">
-        <thead>
+    {% if campagne_list %}
+        <table class="table table-hover">
+            <thead>
             <tr>
                 <th>#</th>
                 <th>Annonceur</th>
                 <th>Date de debut</th>
                 <th>Date de fin</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {% for campagne in campagne_list %}
                 <tr>
-                    <th>{{campagne.id}}</th>
-                    <th>{{campagne.annonceur}}</th>
-                    <th>{{campagne.date_debut}}</th>
-                    <th>{{campagne.date_fin}}</th>
+                    <th>{{ campagne.id }}</th>
+                    <th>{{ campagne.annonceur }}</th>
+                    <th>{{ campagne.date_debut }}</th>
+                    <th>{{ campagne.date_fin }}</th>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-{% else %}
-    <p>No campagnes at the moment.</p>
-{% endif %}
+    {% else %}
+        <p>No campagnes at the moment.</p>
+    {% endif %}
 
 {% endblock %}

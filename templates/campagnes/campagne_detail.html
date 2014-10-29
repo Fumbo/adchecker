@@ -1,52 +1,63 @@
-{% extends "advchecker/index.html" %}
-{% load staticfiles %}
+{% extends "base.html" %}
 
-{% block menu %}
-
-<li><a href="/campagnes">All</a></li>
+{% block title %}Campagne Detail{% endblock %}
+{% block brand %} Campagne Detail {% endblock %}
 {% if campagne_list %}
-{% for campagne in campagne_list %}
-    {% ifequal campagne.id current_id %}
-        <li  class="active"><a href="/campagnes/{{campagne.id}}/">{{campagne}}</a></li>
-    {% else %}
-        <li><a href="/campagnes/{{campagne.id}}/">{{campagne}}</a></li>
-    {% endifequal %}
-{% endfor %}
+    {% for campagne in campagne_list %}
+        {% ifequal campagne.id current_id %}
+        {% endifequal %}
+    {% endfor %}
 {% endif %}
 
+{% block menu %}
+    <li><a href="/campagnes">All</a></li>
+    {% if campagne_list %}
+        {% for campagne in campagne_list %}
+            {% ifequal campagne.id current_id %}
+                <li class="active"><a href="/campagnes/{{ campagne.id }}/">{{ campagne }}</a></li>
+            {% else %}
+                <li><a href="/campagnes/{{ campagne.id }}/">{{ campagne }}</a></li>
+            {% endifequal %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
-
+{% block menu-right-btn %}
+    <a href="/logout">
+        <button type="button" class="btn btn-default navbar-btn">
+            <span class="glyphicon glyphicon-log-out"></span> Logout
+        </button>
+    </a>
+{% endblock %}
 
 
 {% block content %}
 
-{% if campagne_list %}
-    <table class="table table-hover">
-        <thead>
+    {% if campagne_list %}
+        <table class="table table-hover">
+            <thead>
             <tr>
                 <th>#</th>
                 <th>Annonceur</th>
                 <th>Date de debut</th>
                 <th>Date de fin</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {% for campagne in campagne_list %}
-            {% ifequal campagne.id current_id %}
-                <tr id="test1">
-                    <th>{{campagne.id}}</th>
-                    <th>{{campagne.annonceur}}</th>
-                    <th>{{campagne.date_debut}}</th>
-                    <th>{{campagne.date_fin}}</th>
-                </tr>
-            {% endifequal %}
+                {% ifequal campagne.id current_id %}
+                    <tr>
+                        <th>{{ campagne.id }}</th>
+                        <th>{{ campagne.annonceur }}</th>
+                        <th>{{ campagne.date_debut }}</th>
+                        <th>{{ campagne.date_fin }}</th>
+                    </tr>
+                {% endifequal %}
             {% endfor %}
-        </tbody>
-    </table>
-
-{% else %}
-    <p>No campagnes at the moment.</p>
-{% endif %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No campagnes at the moment.</p>
+    {% endif %}
 
 {% endblock %}

@@ -81,8 +81,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TestCycleTestCaseExecution',
             fields=[
-                ('test_cycle_id', models.IntegerField(primary_key=True)),
-                ('case_execution_id', models.IntegerField(serialize=False, primary_key=True)),
+                ('test_cycle_id', models.IntegerField(serialize=False, primary_key=True)),
+                ('case_execution_id', models.IntegerField()),
                 ('include_in_reporting', models.NullBooleanField()),
             ],
             options={
