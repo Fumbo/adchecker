@@ -27,19 +27,48 @@
                     <span class="glyphicon glyphicon-cog"></span> Administation
                 </button>
             </a>
-        </div><!--/.nav-collapse -->
-    </div><!--/.container-fluid -->
-</div> <!-- navbar -->
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+    <!--/.container-fluid -->
+</div>
+<!-- navbar -->
 <div class='container-fluid'>
     {% block content %}
         <table class="table table-hover">
             <thead>
             <tr>
-                {% for field in test_case_exec. %}
                 <th>#</th>
+                <th>case_id</th>
+                <th>execution_batch_id</th>
+                <th>description</th>
+                <th>start_time</th>
+                <th>end_time</th>
+                <th>result</th>
             </tr>
             </thead>
             <tbody>
+            {% for test in test_case_exec %}
+                {% ifequal test.result "PASS" %}
+                <tr class="success">
+                {% else %}
+                <tr class="danger">
+                {% endifequal %}
+                    <th>{{ test.id }}</th>
+                    <th>{{ test.case_id }}</th>
+                    <th>{{ test.execution_batch_id }}</th>
+                    <th>{{ test.description }}</th>
+                    <th>{{ test.start_time }}</th>
+                    <th>{{ test.end_time }}</th>
+                    <th>
+                        {% ifequal test.result "PASS" %}
+                            <span class="glyphicon glyphicon-ok" />
+                        {% else %}
+                            <span class="glyphicon glyphicon-remove"/>
+                        {% endifequal %}
+                    </th>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     {% endblock %}

@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 
-from campagnes.models import Campagne, Enseigne, Magasin, Rayon
+from models import Campagne, Enseigne, Magasin, Rayon
 
 
 class CampagnesAll(TemplateView):

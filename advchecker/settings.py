@@ -30,14 +30,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    # Suit need to be called before admin
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'utils',
     'campagnes',
     'advchecker',
+    'testapp',
     'screamshot',
 )
 
@@ -88,3 +92,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, "templates"),
+)
+
+# For Django suit
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
+)
+# endFor

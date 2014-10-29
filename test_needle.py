@@ -1,21 +1,10 @@
 from needle.cases import NeedleTestCase
 from selenium.webdriver.common.keys import Keys
 
-
-# class BBCNewsTest(NeedleTestCase):
-#
-#     @classmethod
-#     def get_web_driver(cls):
-#         return NeedlePhantomJS()
-#
-#     def test_masthead(self):
-#         self.driver.get('http://www.bbc.co.uk/news/')
-#         self.assertScreenshot('#blq-mast', 'bbc-masthead')
-
-
 class AuchanTest(NeedleTestCase):
 
     def test_carrousel(self):
+        """Test carrousel"""
         self.description = "Carrousel"
         self.driver.get('http://www.auchandrive.fr/')
         champs_map = self.driver.find_element_by_name('champs_map')

@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 from views import HomeView
-from tests.views import TestView
+from testapp.views import TestView
 
 
 urlpatterns = patterns('',

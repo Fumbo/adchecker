@@ -1,8 +1,8 @@
 from django.views.generic import TemplateView
 
-from tests.models import TestCaseExecution
+from testapp.models import TestCaseExecution
 
-# Create your views here.
+
 class TestView(TemplateView):
     template_name = "tests/index.html"
 
