@@ -7,12 +7,16 @@ learn the basics of Django and try to make some concrete app
 Dependency
 ==========
 
-Install theses needed packages using pip with :
+### On Linux
+
+Install theses packages using pip with :
 
 ```
 pip install Django
 pip install Django-suit
-pip install nose
-pip install needle
-pip install nose-sneeze
 ```
+
+### On Windows
+
+If you encounter some problems with windows (Naaa, impossible!), you can follow
+[this installation guide](https://docs.djangoproject.com/en/1.7/howto/windows/)
