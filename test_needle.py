@@ -1,8 +1,8 @@
 from needle.cases import NeedleTestCase
 from selenium.webdriver.common.keys import Keys
 
+
 class AuchanTest(NeedleTestCase):
-        
     def test_carrousel(self):
         """Test carrousel"""
         self.description = "Carrousel"

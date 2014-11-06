@@ -34,8 +34,8 @@
             </thead>
             <tbody>
             {% for campagne in campagne_list %}
-                <tr>
-                    <th>{{ campagne.id }}</th>
+                <tr onclick="location.href='/campagnes/{{ campagne.id }}'" style="cursor:pointer;">
+                <th>{{ campagne.id }}</th>
                     <th>{{ campagne.annonceur }}</th>
                     <th>{{ campagne.date_debut }}</th>
                     <th>{{ campagne.date_fin }}</th>

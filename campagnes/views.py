@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 
-from models import Campagne, Enseigne, Magasin
+from models import Campagne
 
 
 class CampagnesAll(TemplateView):
@@ -8,16 +8,11 @@ class CampagnesAll(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CampagnesAll, self).get_context_data(**kwargs)
-        campagne_list = Campagne.objects.all()
-        enseigne_list = Enseigne.objects.all()
-        magasin_list = {}
-        for e in enseigne_list:
-            e_magasins_list = Magasin.objects.filter(enseigne=e)
-            magasin_list[e] = e_magasins_list
-
+        if self.request.user.is_superuser:
+            campagne_list = Campagne.objects.all()
+        else:
+            campagne_list = Campagne.objects.filter(user_id=self.request.user.id)
         context['campagne_list'] = campagne_list
-        context['enseigne_list'] = enseigne_list
-        context['magasin_list'] = magasin_list
         return context
 
 
@@ -26,8 +21,13 @@ class CampagnesDetail(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CampagnesDetail, self).get_context_data(**kwargs)
-        campagne_list = Campagne.objects.all()
-
-        context['current_id'] = int(self.kwargs['campagne_id'])
+        if self.request.user.is_superuser:
+            campagne_list = Campagne.objects.all()
+        else:
+            campagne_list = Campagne.objects.filter(user_id=self.request.user.id)
+        current_campagne = Campagne.objects.get(id=context['campagne_id'])
+        if current_campagne.user.id == self.request.user.id or self.request.user.is_superuser:
+            context['current_campagne'] = current_campagne
         context['campagne_list'] = campagne_list
+        context['allowed_user'] = current_campagne.user
         return context

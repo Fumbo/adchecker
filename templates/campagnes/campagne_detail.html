@@ -1,19 +1,19 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block title %}Campagne Detail{% endblock %}
 {% block brand %} Campagne Detail {% endblock %}
-{% if campagne_list %}
-    {% for campagne in campagne_list %}
-        {% ifequal campagne.id current_id %}
-        {% endifequal %}
-    {% endfor %}
-{% endif %}
+
+
+{% block headers %}
+
+{% endblock %}
 
 {% block menu %}
     <li><a href="/campagnes">All</a></li>
     {% if campagne_list %}
         {% for campagne in campagne_list %}
-            {% ifequal campagne.id current_id %}
+            {% ifequal campagne.id current_campagne.id %}
                 <li class="active"><a href="/campagnes/{{ campagne.id }}/">{{ campagne }}</a></li>
             {% else %}
                 <li><a href="/campagnes/{{ campagne.id }}/">{{ campagne }}</a></li>
@@ -32,32 +32,79 @@
 
 
 {% block content %}
-
-    {% if campagne_list %}
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Annonceur</th>
-                <th>Date de debut</th>
-                <th>Date de fin</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for campagne in campagne_list %}
-                {% ifequal campagne.id current_id %}
-                    <tr>
-                        <th>{{ campagne.id }}</th>
-                        <th>{{ campagne.annonceur }}</th>
-                        <th>{{ campagne.date_debut }}</th>
-                        <th>{{ campagne.date_fin }}</th>
-                    </tr>
-                {% endifequal %}
-            {% endfor %}
-            </tbody>
-        </table>
+    {% if current_campagne %}
+        <div id="tree">
+            <ul>
+                <li><input type="checkbox"><span>Node 1</span>
+                    <ul>
+                        <li><input type="checkbox"><span>Node 1.1</span>
+                            <ul>
+                                <li><input type="checkbox"><span>Node 1.1.1</span>
+                            </ul>
+                    </ul>
+                    <ul>
+                        <li><input type="checkbox"><span>Node 1.2</span>
+                            <ul>
+                                <li><input type="checkbox"><span>Node 1.2.1</span>
+                                <li><input type="checkbox"><span>Node 1.2.2</span>
+                                <li><input type="checkbox"><span>Node 1.2.3</span>
+                                    <ul>
+                                        <li><input type="checkbox"><span>Node 1.2.3.1</span>
+                                        <li><input type="checkbox"><span>Node 1.2.3.2</span>
+                                    </ul>
+                                <li><input type="checkbox"><span>Node 1.2.4</span>
+                                <li><input type="checkbox"><span>Node 1.2.5</span>
+                                <li><input type="checkbox"><span>Node 1.2.6</span>
+                            </ul>
+                    </ul>
+                <li><input type="checkbox"><span>Node 2</span>
+                    <ul>
+                        <li><input type="checkbox"><span>Node 2.1</span>
+                            <ul>
+                                <li><input type="checkbox"><span>Node 2.1.1</span>
+                            </ul>
+                        <li><input type="checkbox"><span>Node 2.2</span>
+                            <ul>
+                                <li><input type="checkbox"><span>Node 2.2.1</span>
+                                <li><input type="checkbox"><span>Node 2.2.2</span>
+                                <li><input type="checkbox"><span>Node 2.2.3</span>
+                                    <ul>
+                                        <li><input type="checkbox"><span>Node 2.2.3.1</span>
+                                        <li><input type="checkbox"><span>Node 2.2.3.2</span>
+                                    </ul>
+                                <li><input type="checkbox"><span>Node 2.2.4</span>
+                                <li><input type="checkbox"><span>Node 2.2.5</span>
+                                <li><input type="checkbox"><span>Node 2.2.6</span>
+                            </ul>
+                    </ul>
+            </ul>
+        </div>
     {% else %}
-        <p>No campagnes at the moment.</p>
+        <p>You must be log with user <b>{{ allowed_user }}</b> to see this campagne</p>
     {% endif %}
 
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- jQueryUI libraries -->
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+    <!-- include plugin-tree -->
+    <script type="text/javascript" src="{% static "js/jquery.tree.min.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery.tree.min.css" %}"/>
+    <!-- initialize checkboxTree plugin -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tree').tree({
+                dnd: false,
+                onCheck: {
+                    node: 'expand',
+                },
+                onUncheck: {
+                    node: 'collapse',
+                }
+            });
+        });
+    </script>
 {% endblock %}

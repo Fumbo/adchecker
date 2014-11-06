@@ -6201,3 +6201,15 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+/* Fumbo's Addings */
+.caret-right {
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid transparent;
+    border-left: 4px solid;
+    display: inline-block;
+    height: 0;
+    opacity: 0.3;
+    vertical-align: top;
+    width: 0;
+}
