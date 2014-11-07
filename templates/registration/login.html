@@ -1,39 +1,73 @@
-{% extends "base.html" %}
+{% load staticfiles %}
 {% load advchecker_extras %}
-
-{% block title %} Log you in {% endblock %}
-{% block brand %} Log you in {% endblock %}
-
-{% block content %}
-
-    {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
-
-    <form method="post" class="form-horizontal" role="form" action="{% url 'django.contrib.auth.views.login' %}">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="{{ form.username.id_for_label }}"
-                   class="col-sm-2 control-label">{{ form.username.label }}</label>
-
-            <div class="col-sm-3">
-                {{ form.username|add_class:'form-control' }}
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="{{ form.password.id_for_label }}"
-                   class="col-sm-2 control-label">{{ form.password.label }}</label>
-
-            <div class="col-sm-3">
-                {{ form.password|add_class:'form-control' }}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-3">
-                <input type="submit" class="btn btn-default" value="login"/>
-                <input type="hidden" class="btn" name="next" value="{{ next }}"/>
-            </div>
-        </div>
-    </form>
-
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en" class=" ">
+<head>
+    <meta charset="utf-8"/>
+    <title>Scale | Web Application</title>
+    <meta name="description"
+          content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/animate.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/icon.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/font.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/app.css" %}" type="text/css"/>
+    <!--[if lt IE 9]>
+    <script src="js/ie/html5shiv.js"></script>
+    <script src="js/ie/respond.min.js"></script>
+    <script src="js/ie/excanvas.js"></script>
+  <![endif]-->
+</head>
+<body class="">
+<section id="content" class="m-t-lg wrapper-md animated fadeInUp">
+    <div class="container aside-xl">
+        <a class="navbar-brand block" href="index.html">Adchecker</a>
+        <section class="m-b-lg">
+            <header class="wrapper text-center">
+                <strong>Connection</strong>
+            </header>
+            <form method="post" role="form" action="{% url 'django.contrib.auth.views.login' %}">
+                {% csrf_token %}
+                <div class="list-group">
+                    <div class="list-group-item">
+                        {{ form.username|add_class:'form-control no-border' }}
+                    </div>
+                    <div class="list-group-item">
+                        {{ form.password|add_class:'form-control no-border' }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Go</button>
+                <div class="text-center m-t m-b">
+                    <a href="#">
+                        <small>Mot de passe perdu?</small>
+                    </a>
+                </div>
+                <div class="line line-dashed"></div>
+                <p class="text-muted text-center">
+                    <small>Vous n'avez pas de compte?</small>
+                </p>
+                <a href="#" class="btn btn-lg btn-default btn-block">Creer un compte</a>
+            </form>
+        </section>
+    </div>
+</section>
+<!-- footer -->
+<footer id="footer">
+    <div class="text-center padder">
+        <p>
+            <small>Adchecker<br>&copy; 2014</small>
+        </p>
+    </div>
+</footer>
+<!-- / footer -->
+<script src="{% static "js/jquery.min.js" %}"></script>
+<!-- Bootstrap -->
+<script src="{% static "js/bootstrap.js" %}"></script>
+<!-- App -->
+<script src="{% static "js/app.js" %}"></script>
+<script src="{% static "js/slimscroll/jquery.slimscroll.min.js" %}"></script>
+<script src="{% static "js/app.plugin.js" %}"></script>
+</body>
+</html>
