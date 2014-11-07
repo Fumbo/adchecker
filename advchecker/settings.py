@@ -97,6 +97,8 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
 
+LOGIN_REDIRECT_URL = "/"
+
 # Dummycaching for developpement
 # https://docs.djangoproject.com/en/1.7/topics/cache/
 CACHES = {
@@ -112,7 +114,7 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
-# Django Suit configuration example
+# Django Suit configuration 
 SUIT_CONFIG = {
     # header
     'ADMIN_NAME': 'Adchecker God Mode',
