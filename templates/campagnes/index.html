@@ -1,51 +1,193 @@
-{% extends "base.html" %}
+{% extends "base_v2.html" %}
+{% load staticfiles %}
 
 {% block title %}Campagnes{% endblock %}
 
+{% block header-right %}
+    <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
+        <!-- Notifications -->
+        <li class="hidden-xs">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="i i-chat3"></i>
+                <span class="badge badge-sm up bg-danger count">2</span>
+            </a>
+            <section class="dropdown-menu aside-xl animated flipInY">
+                <section class="panel bg-white">
+                    <div class="panel-heading b-light bg-light">
+                        <strong>Vous avez <span class="count">2</span> notifications</strong>
+                    </div>
+                    <div class="list-group list-group-alt">
+                        <a href="#" class="media list-group-item">
+                  <span class="pull-left thumb-sm">
+                    <img src="{% static "images/a0.png" %}" alt="..." class="img-circle">
+                  </span>
+                  <span class="media-body block m-b-none">
+                    Use awesome animate.css<br>
+                    <small class="text-muted">10 minutes ago</small>
+                  </span>
+                        </a>
+                        <a href="#" class="media list-group-item">
+                  <span class="media-body block m-b-none">
+                    1.0 initial released<br>
+                    <small class="text-muted">1 hour ago</small>
+                  </span>
+                        </a>
+                    </div>
+                    <div class="panel-footer text-sm">
+                        <a href="#" class="pull-right"><i class="fa fa-cog"></i></a>
+                        <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
+                    </div>
+                </section>
+            </section>
+        </li>
+        <!-- / Notifications -->
+        <!-- User -->
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="thumb-sm avatar pull-left">
+              <img src="{% static "images/a0.png" %}" alt="...">
+            </span>
+                {{ user }}<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu animated fadeInRight">
+                <li>
+                    <span class="arrow top"></span>
+                    <a href="#">Settings</a>
+                </li>
+                <li>
+                    <a href="profile.html">Profile</a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="badge bg-danger pull-right">3</span>
+                        Notifications
+                    </a>
+                </li>
+                <li>
+                    <a href="docs.html">Help</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="modal.lockme.html" data-toggle="ajaxModal">Logout</a>
+                </li>
+            </ul>
+        </li>
+        <!-- / User -->
+    </ul>
+{% endblock %}
+
 {% block menu %}
-    <li class="active"><a href="#">All</a></li>
-    {% if campagne_list %}
-        {% for campagne in campagne_list %}
-            <li><a href="/campagnes/{{ campagne.id }}/">{{ campagne }}</a></li>
-        {% endfor %}
-    {% endif %}
-{% endblock %}
+    <!-- .aside -->
+    <aside class="bg-black aside-md hidden-print hidden-xs" id="nav">
+        <section class="vbox">
+            <section class="w-f scrollable">
+                <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0"
+                     data-size="10px"
+                     data-railOpacity="0.2">
 
-{% block menu-right-btn %}
-    <a href="/logout">
-        <button type="button" class="btn btn-default navbar-btn">
-            <span class="glyphicon glyphicon-log-out"></span> Logout
-        </button>
-    </a>
-{% endblock %}
+                    <!-- nav -->
+                    <nav class="nav-primary hidden-xs">
+                        <div class="text-muted text-sm hidden-nav-xs padder m-t-sm m-b-sm">Mes Campagnes</div>
+                        <ul class="nav nav-main" data-ride="collapse">
+                            <li>
+                                <a href="/campagnes" class="auto">
+                                    <i class="i i-statistics icon">
+                                    </i>
+                                    <span class="font-bold">Toutes</span>
+                                </a>
+                            </li>
+                            {% if nb_campagne > 0 %}
+                                <li>
+                                    <a href="#" class="auto">
+                                        <span class="pull-right text-muted">
+                                            <i class="i i-circle-sm-o text"></i>
+                                            <i class="i i-circle-sm text-active"></i>
+                                        </span>
+                                        <b class="badge bg-danger pull-right">{{ nb_campagne }}</b>
+                                        <i class="i i-stack icon">
+                                        </i>
+                                        <span class="font-bold">Details</span>
+                                    </a>
+                                    <ul class="nav dk">
+                                        {% for campagne in campagne_list %}
+                                            <li>
+                                                <a href="/campagnes/{{ campagne.id }}/" class="auto">
+                                                    <i class="i i-dot"></i>
 
+                                                    <span>{{ campagne }}</span>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <a href="/campagnes" class="auto">
+                                    <i class="fa fa-cogs icon">
+                                    </i>
+                                    <span class="font-bold">Administration</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- / nav -->
+                </div>
+            </section>
+
+            <footer class="footer hidden-xs no-padder text-center-nav-xs">
+                <a href="#nav" data-toggle="class:nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
+                    <i class="i i-circleleft text"></i>
+                    <i class="i i-circleright text-active"></i>
+                </a>
+            </footer>
+        </section>
+    </aside>
+    <!-- /.aside -->
+
+{% endblock %}
 
 {% block content %}
-
-    {% if campagne_list %}
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Annonceur</th>
-                <th>Date de debut</th>
-                <th>Date de fin</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for campagne in campagne_list %}
-                <tr onclick="location.href='/campagnes/{{ campagne.id }}'" style="cursor:pointer;">
-                    <th>{{ campagne.id }}</th>
-                    <th>{{ campagne.annonceur }}</th>
-                    <th>{{ campagne.date_debut }}</th>
-                    <th>{{ campagne.date_fin }}</th>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-    {% else %}
-        <p>No campagnes at the moment.</p>
-    {% endif %}
-
+    <section class="scrollable wrapper">
+        <section class="panel panel-default">
+            <header class="panel-heading">Vos campagnes</header>
+            {% if campagne_list %}
+                <div class="table-responsive">
+                    <table class="table table-striped b-t b-light">
+                        <thead>
+                        <tr>
+                            <th width="20">#</th>
+                            <th>Annonceur</th>
+                            <th class="th-sortable" data-toggle="class">Date de debut
+                            <span class="th-sort">
+                            <i class="fa fa-sort-down text"></i>
+                            <i class="fa fa-sort-up text-active"></i>
+                            <i class="fa fa-sort"></i>
+                            </span>
+                            </th>
+                            <th class="th-sortable" data-toggle="class">Date de fin
+                           <span class="th-sort">
+                            <i class="fa fa-sort-down text"></i>
+                            <i class="fa fa-sort-up text-active"></i>
+                            <i class="fa fa-sort"></i>
+                          </span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for campagne in campagne_list %}
+                            <tr onclick="location.href='/campagnes/{{ campagne.id }}/'" style="cursor:pointer;">
+                                <th>{{ campagne.id }}</th>
+                                <th>{{ campagne.annonceur }}</th>
+                                <th>{{ campagne.date_debut }}</th>
+                                <th>{{ campagne.date_fin }}</th>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>Vous n'avez fait aucune campagne pour le moment.</p>
+            {% endif %}
+        </section>
+    </section>
 {% endblock %}

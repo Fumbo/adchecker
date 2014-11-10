@@ -13,6 +13,7 @@ class CampagnesAll(TemplateView):
         else:
             campagne_list = Campagne.objects.filter(user_id=self.request.user.id)
         context['campagne_list'] = campagne_list
+        context['nb_campagne'] = len(campagne_list)
         return context
 
 
