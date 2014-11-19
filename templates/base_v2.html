@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="{% static "css/icon.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/font.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/app.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "js/intro/introjs.css" %}" type="text/css">
+
+    {% block headers %}
+    {% endblock %}
+
     <!--[if lt IE 9]>
     <script src="{% static "js/ie/html5shiv.js" %}"></script>
     <script src="{% static "js/ie/respond.min.js" %}"></script>
@@ -63,7 +68,10 @@
 <script src="{% static "js/app.js" %}"></script>
 <script src="{% static "js/slimscroll/jquery.slimscroll.min.js" %}"></script>
 <script src="{% static "js/intro/intro.min.js" %}"></script>
-<script src="{% static "js/intro/demo.js" %}"></script>
 <script src="{% static "js/app.plugin.js" %}"></script>
+
+{% block scripts %}
+{% endblock %}
+
 </body>
 </html>

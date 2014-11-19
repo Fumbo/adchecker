@@ -1,12 +1,13 @@
 {% extends 'registration/base_login.html' %}
 {% load advchecker_extras %}
+{% load staticfiles %}
 
 {% block title %}Log you in{% endblock %}
 
 {% block body %}
     <section id="content" class="m-t-lg wrapper-md animated fadeInUp">
-        <div class="container aside-xl">
-            <a class="navbar-brand block" href="index.html">Adchecker</a>
+        <div class="container aside-xl" style="background-color: #f2f4f8;">
+            <a class="navbar-brand block" href="/accounts/login">Adchecker</a>
             <section class="m-b-lg">
 
                 <header class="wrapper text-center">
@@ -44,3 +45,4 @@
         </div>
     </section>
 {% endblock %}
+

@@ -1,12 +1,13 @@
 {% extends 'registration/base_login.html' %}
 {% load advchecker_extras %}
+{% load staticfiles %}
 
 {% block title %}Creation de compte{% endblock %}
 
 {% block body %}
     <section id="content" class="m-t-lg wrapper-md animated fadeInDown">
         <div class="container aside-xl">
-            <a class="navbar-brand block" href="index.html">Adchecker</a>
+            <a class="navbar-brand block" href="/accounts/login">Adchecker</a>
             <section class="m-b-lg">
                 <header class="wrapper text-center">
                     <strong>Creation de compte</strong>
@@ -34,7 +35,7 @@
                         <div class="list-group-item">
                             {{ form.email|add_class:'form-control no-border'|add_placeholder:'Email' }}
                         </div>
-                        <div class="list-group-item">
+                        <div id="password1" class="list-group-item">
                             {{ form.password1|add_class:'form-control no-border'|add_placeholder:'Mot de passe' }}
                         </div>
                         <div class="list-group-item">
@@ -59,3 +60,4 @@
         </div>
     </section>
 {% endblock %}
+
