@@ -41,7 +41,13 @@ class Rayon(models.Model):
     magasin = models.ForeignKey(Magasin)
 
     def __str__(self):
-        return "%s>%s>%s" % (self.magasin.enseigne.nom, self.magasin.ville, self.nom)
+        return "%s>%s>%s" % (self.magasin.enseigne.nom, self.magasin.ville, self._get_heirloom())
+
+    def _get_heirloom(self):
+        if self.parent:
+            return "%s>%s" % (self.parent._get_heirloom(), self.nom)
+        else:
+            return self.nom
 
 
 class RayonAdmin(admin.ModelAdmin):
@@ -84,6 +90,6 @@ class CampagneAdmin(admin.ModelAdmin):
 # Planification Campagne
 class PlanificationCampagne(models.Model):
     campagne = models.ForeignKey(Campagne)
-    date_execution = models.DateField()
+    date_execution = models.DateTimeField()
     rayon = models.ForeignKey(Rayon)
     status = models.CharField(max_length=4)  # PASS|FAIL|BUG|SKIP

@@ -4,6 +4,7 @@
 {% block title %}{{ current_campagne }}{% endblock %}
 
 {% block headers %}
+    <link rel="stylesheet" href="{% static "js/datatables/datatables.css" %}" type="text/css"/>
 {% endblock %}
 
 {% block header-right %}
@@ -159,79 +160,53 @@
 {% endblock %}
 
 
-<!-- TODO
-Afficher les tests réalisées dans un tableau du meme style (DataTable) de campagnes/index.html
--->
 {% block content %}
     <section class="scrollable wrapper">
-        <section id="tree" class="panel panel-default">
-            <header class="panel-heading">Liste des rayons</header>
-            {% if current_campagne %}
-                <ul>
-                    <li><input type="checkbox"><span>Node 1</span>
-                        <ul>
-                            <li><input type="checkbox"><span>Node 1.1</span>
-                                <ul>
-                                    <li><input type="checkbox"><span>Node 1.1.1</span>
-                                </ul>
-                        </ul>
-                        <ul>
-                            <li><input type="checkbox"><span>Node 1.2</span>
-                                <ul>
-                                    <li><input type="checkbox"><span>Node 1.2.1</span>
-                                    <li><input type="checkbox"><span>Node 1.2.2</span>
-                                    <li><input type="checkbox"><span>Node 1.2.3</span>
-                                        <ul>
-                                            <li><input type="checkbox"><span>Node 1.2.3.1</span>
-                                            <li><input type="checkbox"><span>Node 1.2.3.2</span>
-                                        </ul>
-                                    <li><input type="checkbox"><span>Node 1.2.4</span>
-                                    <li><input type="checkbox"><span>Node 1.2.5</span>
-                                    <li><input type="checkbox"><span>Node 1.2.6</span>
-                                </ul>
-                        </ul>
-                    <li><input type="checkbox"><span>Node 2</span>
-                        <ul>
-                            <li><input type="checkbox"><span>Node 2.1</span>
-                                <ul>
-                                    <li><input type="checkbox"><span>Node 2.1.1</span>
-                                </ul>
-                            <li><input type="checkbox"><span>Node 2.2</span>
-                                <ul>
-                                    <li><input type="checkbox"><span>Node 2.2.1</span>
-                                    <li><input type="checkbox"><span>Node 2.2.2</span>
-                                    <li><input type="checkbox"><span>Node 2.2.3</span>
-                                        <ul>
-                                            <li><input type="checkbox"><span>Node 2.2.3.1</span>
-                                            <li><input type="checkbox"><span>Node 2.2.3.2</span>
-                                        </ul>
-                                    <li><input type="checkbox"><span>Node 2.2.4</span>
-                                    <li><input type="checkbox"><span>Node 2.2.5</span>
-                                    <li><input type="checkbox"><span>Node 2.2.6</span>
-                                </ul>
-                        </ul>
-                </ul>
+        <section id="voscampagnes" class="panel panel-default">
+            <header class="panel-heading">Snaps de {{ current_campagne }}</header>
+            {% if tests %}
+                <div class="table-responsive">
+                    <table id="campagnes" class="table table-striped m-b-none">
+                        <thead>
+                        <tr>
+                            <th width="8%">#</th>
+                            <th width="52%">Rayon</th>
+                            <th width="30%">Date d'execution</th>
+                            <th width="10%">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for test in tests %}
+                            <tr>
+                                <th>{{ test.id }}</th>
+                                <th>{{ test.rayon }}</th>
+                                <th>{{ test.date_execution }}</th>
+                                {% ifequal test.status "PASS" %}
+                                    <th class="text-center"><span class="fa fa-check-circle text-success"></span></th>
+                                {% endifequal %}
+                                {% ifequal test.status "FAIL" %}
+                                    <th class="text-center"><span class="fa fa-times-circle text-danger"></span></th>
+                                {% endifequal %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             {% else %}
-                <p>You must be log with user <b>{{ allowed_user }}</b> to see this campagne</p>
+                <p>Vous devez être connecter en tant que {{ allowed_user }} pour voir cette campagne</p>
             {% endif %}
-
         </section>
     </section>
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- jQueryUI libraries -->
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
-    <!-- include plugin-tree -->
-    <script type="text/javascript" src="{% static "js/jquery.tree.min.js" %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static "css/jquery.tree.min.css" %}"/>
-    <!-- initialize checkboxTree plugin -->
-    <script type="text/javascript">
+    <script src="{% static "js/intro/intro_campagne_index.js" %}"></script>
+    <script src="{% static "js/datatables/jquery.dataTables.min.js" %}"></script>
+    <script>
         $(document).ready(function () {
-            $('#tree').tree({
-                dnd: false
+            $('#campagnes').DataTable({
+                "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+                pagingType: "simple_numbers"
             });
         });
     </script>

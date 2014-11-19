@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 
-from models import Campagne
+from models import Campagne, PlanificationCampagne
 
 
 class CampagnesAll(TemplateView):
@@ -34,4 +34,5 @@ class CampagnesDetail(TemplateView):
         context['campagne_list'] = campagne_list
         context['nb_campagne'] = len(campagne_list)
         context['allowed_user'] = current_campagne.user
+        context['tests'] = PlanificationCampagne.objects.filter(campagne_id=current_campagne.id)
         return context
