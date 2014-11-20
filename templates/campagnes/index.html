@@ -1,4 +1,4 @@
-{% extends "base_v2.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 
 {% block title %}Campagnes{% endblock %}
@@ -97,7 +97,7 @@
                         <div class="text-muted text-sm hidden-nav-xs padder m-t-sm m-b-sm">Mes Campagnes</div>
                         <ul class="nav nav-main" data-ride="collapse">
                             <li class="active">
-                            <a href="/campagnes" class="auto">
+                                <a href="/campagnes" class="auto">
                                     <i class="i i-statistics icon">
                                     </i>
                                     <span class="font-bold">Toutes</span>
@@ -116,7 +116,7 @@
                                         <span class="font-bold">Details</span>
                                     </a>
                                     <ul class="nav dk" style="display: block;">
-                                    {% for campagne in campagne_list %}
+                                        {% for campagne in campagne_list %}
                                             <li>
                                                 <a href="/campagnes/{{ campagne.id }}/" class="auto">
                                                     <i class="i i-dot"></i>
@@ -129,13 +129,13 @@
                                 </li>
                             {% endif %}
                             {% if super %}
-                            <li>
-                                <a href="/admin" class="auto">
-                                <i class="fa fa-cogs icon">
-                                    </i>
-                                    <span class="font-bold">Administration</span>
-                                </a>
-                            </li>
+                                <li>
+                                    <a href="/admin" class="auto">
+                                        <i class="fa fa-cogs icon">
+                                        </i>
+                                        <span class="font-bold">Administration</span>
+                                    </a>
+                                </li>
                             {% endif %}
                         </ul>
                     </nav>

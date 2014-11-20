@@ -19,7 +19,7 @@ class CampagnesAll(TemplateView):
 
 
 class CampagnesDetail(TemplateView):
-    template_name = "campagnes/detail_v2.html"
+    template_name = "campagnes/campagne_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super(CampagnesDetail, self).get_context_data(**kwargs)

@@ -1,4 +1,4 @@
-{% extends "base_v2.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 
 {% block title %}{{ current_campagne }}{% endblock %}
@@ -182,10 +182,12 @@
                                 <th>{{ test.rayon }}</th>
                                 <th>{{ test.date_execution }}</th>
                                 {% ifequal test.status "PASS" %}
-                                    <th class="text-center"><span class="fa fa-check-circle text-success"></span></th>
+                                    <th class="text-center"><span class="fa fa-check-circle text-success"
+                                                                  title="PASS"></span></th>
                                 {% endifequal %}
                                 {% ifequal test.status "FAIL" %}
-                                    <th class="text-center"><span class="fa fa-times-circle text-danger"></span></th>
+                                    <th class="text-center"><span class="fa fa-times-circle text-danger"
+                                                                  title="FAIL"></span></th>
                                 {% endifequal %}
                             </tr>
                         {% endfor %}
@@ -206,7 +208,10 @@
         $(document).ready(function () {
             $('#campagnes').DataTable({
                 "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-                pagingType: "simple_numbers"
+                pagingType: "simple_numbers",
+                "columnDefs": [
+                    { "type": "title-string", targets: 3}
+                ]
             });
         });
     </script>

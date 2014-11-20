@@ -1,109 +1,217 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block title %}Campagne Detail{% endblock %}
-{% block brand %} Campagne Detail {% endblock %}
-
+{% block title %}{{ current_campagne }}{% endblock %}
 
 {% block headers %}
+    <link rel="stylesheet" href="{% static "js/datatables/datatables.css" %}" type="text/css"/>
+{% endblock %}
 
+{% block header-right %}
+    <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
+        <!-- Notifications -->
+        <li class="hidden-xs">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="i i-chat3"></i>
+                <span class="badge badge-sm up bg-danger count">2</span>
+            </a>
+            <section class="dropdown-menu aside-xl animated flipInY">
+                <section class="panel bg-white">
+                    <div class="panel-heading b-light bg-light">
+                        <strong>Vous avez <span class="count">2</span> notifications</strong>
+                    </div>
+                    <div class="list-group list-group-alt">
+                        <a href="#" class="media list-group-item">
+                  <span class="pull-left thumb-sm">
+                    <img src="{% static "images/a0.png" %}" alt="..." class="img-circle">
+                  </span>
+                  <span class="media-body block m-b-none">
+                    Use awesome animate.css<br>
+                    <small class="text-muted">10 minutes ago</small>
+                  </span>
+                        </a>
+                        <a href="#" class="media list-group-item">
+                  <span class="media-body block m-b-none">
+                    1.0 initial released<br>
+                    <small class="text-muted">1 hour ago</small>
+                  </span>
+                        </a>
+                    </div>
+                    <div class="panel-footer text-sm">
+                        <a href="#" class="pull-right"><i class="fa fa-cog"></i></a>
+                        <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
+                    </div>
+                </section>
+            </section>
+        </li>
+        <!-- / Notifications -->
+        <!-- User -->
+        <li id="profile" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="thumb-sm avatar pull-left">
+              <img src="{% static "images/a0.png" %}" alt="...">
+            </span>
+                {{ user }}<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu animated fadeInRight">
+                <li>
+                    <span class="arrow top"></span>
+                    <a href="#">Settings</a>
+                </li>
+                <li>
+                    <a href="profile.html">Profile</a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="badge bg-danger pull-right">3</span>
+                        Notifications
+                    </a>
+                </li>
+                <li>
+                    <a href="/conditions">Docs</a>
+                </li>
+                <li id="help">
+                    <a href="#">Help</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="/accounts/logout" data-toggle="ajaxModal">Logout</a>
+                </li>
+            </ul>
+        </li>
+        <!-- / User -->
+    </ul>
 {% endblock %}
 
 {% block menu %}
-    <li><a href="/campagnes">All</a></li>
-    {% if campagne_list %}
-        {% for campagne in campagne_list %}
-            {% ifequal campagne.id current_campagne.id %}
-                <li class="active"><a href="/campagnes/{{ campagne.id }}/">{{ campagne }}</a></li>
-            {% else %}
-                <li><a href="/campagnes/{{ campagne.id }}/">{{ campagne }}</a></li>
-            {% endifequal %}
-        {% endfor %}
-    {% endif %}
-{% endblock %}
+    <!-- .aside -->
+    <aside class="bg-black aside-md hidden-print hidden-xs" id="nav">
+        <section class="vbox">
+            <section class="w-f scrollable">
+                <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0"
+                     data-size="10px"
+                     data-railOpacity="0.2">
 
-{% block menu-right-btn %}
-    <a href="/accounts/logout">
-        <button type="button" class="btn btn-default navbar-btn">
-            <span class="glyphicon glyphicon-log-out"></span> Logout
-        </button>
-    </a>
+                    <!-- nav -->
+                    <nav class="nav-primary hidden-xs">
+                        <div class="text-muted text-sm hidden-nav-xs padder m-t-sm m-b-sm">Mes Campagnes</div>
+                        <ul class="nav nav-main" data-ride="collapse">
+                            <li>
+                                <a href="/campagnes" class="auto">
+                                    <i class="i i-statistics icon">
+                                    </i>
+                                    <span class="font-bold">Toutes</span>
+                                </a>
+                            </li>
+                            {% if nb_campagne > 0 %}
+                                <li class="active">
+                                    <a href="#" class="auto">
+                                        <span class="pull-right text-muted">
+                                            <i class="i i-circle-sm-o text"></i>
+                                            <i class="i i-circle-sm text-active"></i>
+                                        </span>
+                                        <b class="badge bg-danger pull-right">{{ nb_campagne }}</b>
+                                        <i class="i i-stack icon">
+                                        </i>
+                                        <span class="font-bold">Details</span>
+                                    </a>
+                                    <ul class="nav dk" style="display: block;">
+                                        {% for campagne in campagne_list %}
+                                            {% ifequal campagne.id current_campagne.id %}
+                                                <li class="active">
+                                                    {% else %}
+                                                <li>
+                                            {% endifequal %}
+                                        <a href="/campagnes/{{ campagne.id }}/" class="auto">
+                                            <i class="i i-dot"></i>
+
+                                            <span>{{ campagne }}</span>
+                                        </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if super %}
+                                <li>
+                                    <a href="/admin" class="auto">
+                                        <i class="fa fa-cogs icon">
+                                        </i>
+                                        <span class="font-bold">Administration</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    <!-- / nav -->
+                </div>
+            </section>
+
+            <footer class="footer hidden-xs no-padder text-center-nav-xs">
+                <a href="#nav" data-toggle="class:nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
+                    <i class="i i-circleleft text"></i>
+                    <i class="i i-circleright text-active"></i>
+                </a>
+            </footer>
+        </section>
+    </aside>
+    <!-- /.aside -->
+
 {% endblock %}
 
 
 {% block content %}
-    {% if current_campagne %}
-        <div id="tree">
-            <ul>
-                <li><input type="checkbox"><span>Node 1</span>
-                    <ul>
-                        <li><input type="checkbox"><span>Node 1.1</span>
-                            <ul>
-                                <li><input type="checkbox"><span>Node 1.1.1</span>
-                            </ul>
-                    </ul>
-                    <ul>
-                        <li><input type="checkbox"><span>Node 1.2</span>
-                            <ul>
-                                <li><input type="checkbox"><span>Node 1.2.1</span>
-                                <li><input type="checkbox"><span>Node 1.2.2</span>
-                                <li><input type="checkbox"><span>Node 1.2.3</span>
-                                    <ul>
-                                        <li><input type="checkbox"><span>Node 1.2.3.1</span>
-                                        <li><input type="checkbox"><span>Node 1.2.3.2</span>
-                                    </ul>
-                                <li><input type="checkbox"><span>Node 1.2.4</span>
-                                <li><input type="checkbox"><span>Node 1.2.5</span>
-                                <li><input type="checkbox"><span>Node 1.2.6</span>
-                            </ul>
-                    </ul>
-                <li><input type="checkbox"><span>Node 2</span>
-                    <ul>
-                        <li><input type="checkbox"><span>Node 2.1</span>
-                            <ul>
-                                <li><input type="checkbox"><span>Node 2.1.1</span>
-                            </ul>
-                        <li><input type="checkbox"><span>Node 2.2</span>
-                            <ul>
-                                <li><input type="checkbox"><span>Node 2.2.1</span>
-                                <li><input type="checkbox"><span>Node 2.2.2</span>
-                                <li><input type="checkbox"><span>Node 2.2.3</span>
-                                    <ul>
-                                        <li><input type="checkbox"><span>Node 2.2.3.1</span>
-                                        <li><input type="checkbox"><span>Node 2.2.3.2</span>
-                                    </ul>
-                                <li><input type="checkbox"><span>Node 2.2.4</span>
-                                <li><input type="checkbox"><span>Node 2.2.5</span>
-                                <li><input type="checkbox"><span>Node 2.2.6</span>
-                            </ul>
-                    </ul>
-            </ul>
-        </div>
-    {% else %}
-        <p>You must be log with user <b>{{ allowed_user }}</b> to see this campagne</p>
-    {% endif %}
-
+    <section class="scrollable wrapper">
+        <section id="voscampagnes" class="panel panel-default">
+            <header class="panel-heading">Snaps de {{ current_campagne }}</header>
+            {% if tests %}
+                <div class="table-responsive">
+                    <table id="campagnes" class="table table-striped m-b-none">
+                        <thead>
+                        <tr>
+                            <th width="8%">#</th>
+                            <th width="52%">Rayon</th>
+                            <th width="30%">Date d'execution</th>
+                            <th width="10%">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for test in tests %}
+                            <tr>
+                                <th>{{ test.id }}</th>
+                                <th>{{ test.rayon }}</th>
+                                <th>{{ test.date_execution }}</th>
+                                {% ifequal test.status "PASS" %}
+                                    <th class="text-center"><span class="fa fa-check-circle text-success"
+                                                                  title="PASS"></span></th>
+                                {% endifequal %}
+                                {% ifequal test.status "FAIL" %}
+                                    <th class="text-center"><span class="fa fa-times-circle text-danger"
+                                                                  title="FAIL"></span></th>
+                                {% endifequal %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>Vous devez être connecter en tant que {{ allowed_user }} pour voir cette campagne</p>
+            {% endif %}
+        </section>
+    </section>
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- jQueryUI libraries -->
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
-    <!-- include plugin-tree -->
-    <script type="text/javascript" src="{% static "js/jquery.tree.min.js" %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static "css/jquery.tree.min.css" %}"/>
-    <!-- initialize checkboxTree plugin -->
-    <script type="text/javascript">
+    <script src="{% static "js/intro/intro_campagne_index.js" %}"></script>
+    <script src="{% static "js/datatables/jquery.dataTables.min.js" %}"></script>
+    <script>
         $(document).ready(function () {
-            $('#tree').tree({
-                dnd: false,
-                onCheck: {
-                    node: 'expand'
-                },
-                onUncheck: {
-                    node: 'collapse'
-                }
+            $('#campagnes').DataTable({
+                "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+                pagingType: "simple_numbers",
+                "columnDefs": [
+                    { "type": "title-string", targets: 3}
+                ]
             });
         });
     </script>
