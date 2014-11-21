@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -42,7 +43,6 @@ INSTALLED_APPS = (
     'campagnes',
     'advchecker',
     'testapp',
-    'screamshot',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -128,7 +128,7 @@ SUIT_CONFIG = {
     # menu
     # 'SEARCH_URL': '/admin/auth/user/',
     # 'MENU_ICONS': {
-    #    'sites': 'icon-leaf',
+    # 'sites': 'icon-leaf',
     #    'auth': 'icon-lock',
     # },
     # 'MENU_OPEN_FIRST_CHILD': True, # Default True
