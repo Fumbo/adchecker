@@ -5,7 +5,7 @@ from accounts.views import Register
 
 
 urlpatterns = patterns('',
-                       url(r'^login/$', auth_views.login),
-                       url(r'^logout/$', auth_views.logout_then_login),
+                       url(r'^login/$', auth_views.login, name='login'),
+                       url(r'^logout/$', auth_views.logout_then_login, name='logout'),
                        url(r'^signup/$', Register.as_view(), name="signup"),
 )

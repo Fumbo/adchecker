@@ -7,7 +7,7 @@
 {% block body %}
     <section id="content" class="m-t-lg wrapper-md animated fadeInUp">
         <div class="container aside-xl" style="background-color: #f2f4f8;">
-            <a class="navbar-brand block" href="/accounts/login">Adchecker</a>
+            <a class="navbar-brand block" href="{% url 'accounts:login' %}">Adchecker</a>
             <section class="m-b-lg">
 
                 <header class="wrapper text-center">
@@ -15,7 +15,7 @@
                 </header>
 
                 <!-- login form -->
-                <form method="post" role="form" action="{% url 'django.contrib.auth.views.login' %}">
+                <form method="post" role="form" action="{% url 'accounts:login' %}">
                     {% csrf_token %}
                     <div class="list-group">
                         <div class="list-group-item">
@@ -37,7 +37,7 @@
                     <p class="text-muted text-center">
                         <small>Vous n'avez pas de compte?</small>
                     </p>
-                    <a href="/accounts/signup" class="btn btn-lg btn-default btn-block">Creer un compte</a>
+                    <a href="{% url 'accounts:signup' %}" class="btn btn-lg btn-default btn-block">Creer un compte</a>
                 </form>
                 <!-- / login form -->
 

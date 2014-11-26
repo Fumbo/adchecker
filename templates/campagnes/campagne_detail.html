@@ -68,14 +68,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/conditions">Docs</a>
+                    <a href="{% url 'docs' %}">Docs</a>
                 </li>
                 <li id="help">
                     <a href="#">Help</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="/accounts/logout" data-toggle="ajaxModal">Logout</a>
+                    <a href="{% url 'accounts:logout' %}" data-toggle="ajaxModal">Logout</a>
                 </li>
             </ul>
         </li>
@@ -97,8 +97,8 @@
                         <div class="text-muted text-sm hidden-nav-xs padder m-t-sm m-b-sm">Mes Campagnes</div>
                         <ul class="nav nav-main" data-ride="collapse">
                             <li>
-                                <a href="/campagnes" class="auto">
-                                    <i class="i i-statistics icon">
+                                <a href="{% url 'campagnes:index' %}" class="auto">
+                                <i class="i i-statistics icon">
                                     </i>
                                     <span class="font-bold">Toutes</span>
                                 </a>
@@ -122,8 +122,8 @@
                                                     {% else %}
                                                 <li>
                                             {% endifequal %}
-                                        <a href="/campagnes/{{ campagne.id }}/" class="auto">
-                                            <i class="i i-dot"></i>
+                                        <a href="{% url 'campagnes:detail' campagne.id %}" class="auto">
+                                        <i class="i i-dot"></i>
 
                                             <span>{{ campagne }}</span>
                                         </a>
@@ -134,8 +134,8 @@
                             {% endif %}
                             {% if super %}
                                 <li>
-                                    <a href="/admin" class="auto">
-                                        <i class="fa fa-cogs icon">
+                                    <a href="{% url 'admin:index' %}" class="auto">
+                                    <i class="fa fa-cogs icon">
                                         </i>
                                         <span class="font-bold">Administration</span>
                                     </a>

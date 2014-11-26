@@ -7,7 +7,7 @@
 {% block body %}
     <section id="content" class="m-t-lg wrapper-md animated fadeInDown">
         <div class="container aside-xl">
-            <a class="navbar-brand block" href="/accounts/login">Adchecker</a>
+            <a class="navbar-brand block" href="{% url 'accounts:login' %}">Adchecker</a>
             <section class="m-b-lg">
                 <header class="wrapper text-center">
                     <strong>Creation de compte</strong>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="checkbox m-b">
                         <label>
-                            {{ form.conditions }} J'accepte les <a href="/conditions">Conditions générales et la
+                            {{ form.conditions }} J'accepte les <a href="{% url 'docs' %}">Conditions générales et la
                             politique de
                             confidentialité</a>
                         </label>
@@ -54,7 +54,7 @@
                     <p class="text-muted text-center">
                         <small>Vous avez deja un compte?</small>
                     </p>
-                    <a href="/accounts/login" class="btn btn-lg btn-default btn-block">Connectez-vous</a>
+                    <a href="{% url 'accounts:login' %}" class="btn btn-lg btn-default btn-block">Connectez-vous</a>
                 </form>
             </section>
         </div>

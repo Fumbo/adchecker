@@ -31,8 +31,8 @@
             <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
                 <i class="fa fa-bars"></i>
             </a>
-            <a href="/campagnes" class="navbar-brand">
-                <img src="{% static "images/logo.png" %}" class="m-r-sm" alt="scale">
+            <a href="{% url 'campagnes:index' %}" class="navbar-brand">
+            <img src="{% static "images/logo.png" %}" class="m-r-sm" alt="scale">
                 <span class="hidden-nav-xs">Adchecker</span>
             </a>
             <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">

@@ -23,8 +23,8 @@
                 {% endblock %}
             </ul>
             <div class="btn-group navbar-right">
-                <a href="/admin">
-                    <button type="button" class="btn btn-default navbar-btn">
+                <a href="{% url 'admin:index' %}">
+                <button type="button" class="btn btn-default navbar-btn">
                         <span class="glyphicon glyphicon-cog"></span> Administation
                     </button>
                     {% block menu-right-btn %}

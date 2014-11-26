@@ -7,9 +7,9 @@ from testapp.views import TestView
 
 
 urlpatterns = patterns('',
-                       url(r'^$', HomeView.as_view()),
-                       url(r'^campagnes/', include('campagnes.urls')),
-                       url(r'^accounts/', include('accounts.urls')),
+                       url(r'^$', HomeView.as_view(), name='index'),
+                       url(r'^campagnes/', include('campagnes.urls', namespace="campagnes")),
+                       url(r'^accounts/', include('accounts.urls', namespace="accounts")),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^conditions/', TemplateView.as_view(template_name="advchecker/docs.html"), name='docs'),
 

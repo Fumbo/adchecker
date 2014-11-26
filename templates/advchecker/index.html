@@ -14,7 +14,7 @@
 <div class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Advertising Checker</a>
+            <a class="navbar-brand" href="{% url 'index' %}">Advertising Checker</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -38,14 +38,14 @@
                         </li>
                         {% endif %}
                         </ul>
-                    <li><a href="/campagnes">Campagnes</a></li>
+                    <li><a href="{% url 'campagnes:index' %}">Campagnes</a></li>
                     </li>
                 {% endfor %}
                 {% endif %}
             {% endblock %}
             </ul>
-            <a href="/admin">
-                <button type="button" class="btn btn-default navbar-right navbar-btn">
+            <a href="{% url 'admin:index' %}">
+            <button type="button" class="btn btn-default navbar-right navbar-btn">
                     <span class="glyphicon glyphicon-cog"></span> Administation
                 </button>
             </a>
