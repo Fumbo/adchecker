@@ -99,7 +99,8 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "accounts:login"
+LOGIN_REDIRECT_URL = "campagnes:index"
 
 # Dummycaching for developpement
 # https://docs.djangoproject.com/en/1.7/topics/cache/
