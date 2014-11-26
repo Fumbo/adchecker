@@ -100,6 +100,7 @@ TEMPLATE_DIRS = (
 )
 
 LOGIN_URL = "accounts:login"
+LOGOUT_URL = "accounts:logout"
 LOGIN_REDIRECT_URL = "campagnes:index"
 
 # Dummycaching for developpement
