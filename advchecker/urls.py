@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from views import HomeView
+from advchecker.views import HomeView
 from testapp.views import TestView
 
 
