@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth import views as auth_views
 
-from views import Register
+from accounts.views import Register
 
 
 urlpatterns = patterns('',
