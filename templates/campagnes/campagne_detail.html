@@ -182,12 +182,12 @@
                                 <th>{{ test.rayon }}</th>
                                 <th>{{ test.date_execution }}</th>
                                 {% ifequal test.status "PASS" %}
-                                    <th class="text-center"><span class="fa fa-check-circle text-success"
-                                                                  title="PASS"></span></th>
+                                    <th class="text-center"><i class="fa fa-check text-success text"
+                                                               title="PASS"></i></th>
                                 {% endifequal %}
                                 {% ifequal test.status "FAIL" %}
-                                    <th class="text-center"><span class="fa fa-times-circle text-danger"
-                                                                  title="FAIL"></span></th>
+                                    <th class="text-center"><i class="fa fa-times text-danger text"
+                                                               title="FAIL"></i></th>
                                 {% endifequal %}
                             </tr>
                         {% endfor %}
