@@ -28,7 +28,7 @@
     height: 10px;
     width: 100px;
     overflow: hidden;
-    background-image: url("../images/anchor.gif")
+    background-image: url("../../images/anchor.gif")
 }
 
 .daredevel-tree li span.prepended.over {

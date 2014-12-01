@@ -32,7 +32,7 @@
                 <i class="fa fa-bars"></i>
             </a>
             <a href="{% url 'campagnes:index' %}" class="navbar-brand">
-            <img src="{% static "images/logo.png" %}" class="m-r-sm" alt="scale">
+                <img src="{% static "images/logo.png" %}" class="m-r-sm" alt="scale">
                 <span class="hidden-nav-xs">Adchecker</span>
             </a>
             <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
@@ -48,6 +48,87 @@
         <section class="hbox stretch">
 
             {% block menu %}
+                <!-- .aside -->
+                <aside class="bg-black aside-md hidden-print hidden-xs" id="nav">
+                    <section class="vbox">
+                        <section class="w-f scrollable">
+                            <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0"
+                                 data-size="10px"
+                                 data-railOpacity="0.2">
+
+                                <!-- nav -->
+                                <nav class="nav-primary hidden-xs">
+                                    <div class="text-muted text-sm hidden-nav-xs padder m-t-sm m-b-sm">Mes Campagnes
+                                    </div>
+                                    <ul class="nav nav-main" data-ride="collapse">
+                                        <li class="active">
+                                            <a href="{% url 'campagnes:index' %}" class="auto">
+                                                <i class="i i-statistics icon">
+                                                </i>
+                                                <span class="font-bold">Toutes</span>
+                                            </a>
+                                        </li>
+                                        {% if nb_campagne > 0 %}
+                                            <li>
+                                                <a href="#" class="auto">
+                                        <span class="pull-right text-muted">
+                                            <i class="i i-circle-sm-o text"></i>
+                                            <i class="i i-circle-sm text-active"></i>
+                                        </span>
+                                                    <b class="badge bg-danger pull-right">{{ nb_campagne }}</b>
+                                                    <i class="i i-stack icon">
+                                                    </i>
+                                                    <span class="font-bold">Details</span>
+                                                </a>
+                                                <ul class="nav dk" style="display: block;">
+                                                    {% for campagne in campagne_list %}
+                                                        {% ifequal campagne.id current_campagne.id %}
+                                                            <li class="active">
+                                                                {% else %}
+                                                            <li>
+                                                        {% endifequal %}
+                                                    <a href="{% url 'campagnes:detail' campagne.id %}" class="auto">
+                                                        <i class="i i-dot"></i>
+
+                                                        <span>{{ campagne }}</span>
+                                                    </a>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        {% endif %}
+                                        <li>
+                                            <a href="{% url 'campagnes:new' %}" class="auto">
+                                                <i class="fa fa-plus icon">
+                                                </i>
+                                                <span class="font-bold">Nouvelle campagne</span>
+                                            </a>
+                                        </li>
+                                        {% if super %}
+                                            <li>
+                                                <a href="{% url 'admin:index' %}" class="auto">
+                                                    <i class="fa fa-cogs icon">
+                                                    </i>
+                                                    <span class="font-bold">Administration</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                                <!-- / nav -->
+                            </div>
+                        </section>
+
+                        <footer class="footer hidden-xs no-padder text-center-nav-xs">
+                            <a href="#nav" data-toggle="class:nav-xs"
+                               class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
+                                <i class="i i-circleleft text"></i>
+                                <i class="i i-circleright text-active"></i>
+                            </a>
+                        </footer>
+                    </section>
+                </aside>
+                <!-- /.aside -->
             {% endblock %}
 
             <section id="content">

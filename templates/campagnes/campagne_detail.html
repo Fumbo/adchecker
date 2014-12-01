@@ -132,7 +132,14 @@
                                     </ul>
                                 </li>
                             {% endif %}
-                            {% if super %}
+                            <li>
+                                <a href="{% url 'campagnes:new' %}" class="auto">
+                                    <i class="fa fa-plus icon">
+                                    </i>
+                                    <span class="font-bold">Nouvelle campagne</span>
+                                </a>
+
+                                {% if super %}
                                 <li>
                                     <a href="{% url 'admin:index' %}" class="auto">
                                     <i class="fa fa-cogs icon">
@@ -164,14 +171,15 @@
     <section class="scrollable wrapper">
         <section id="voscampagnes" class="panel panel-default">
             <header class="panel-heading">Snaps de {{ current_campagne }}</header>
-            {% if tests %}
+            {% if is_allowed %}
                 <div class="table-responsive">
                     <table id="campagnes" class="table table-striped m-b-none">
                         <thead>
                         <tr>
                             <th width="8%">#</th>
-                            <th width="52%">Rayon</th>
-                            <th width="30%">Date d'execution</th>
+                            <th width="10%">Img</th>
+                            <th width="47%">Rayon</th>
+                            <th width="25%">Date d'execution</th>
                             <th width="10%">Status</th>
                         </tr>
                         </thead>
@@ -179,6 +187,8 @@
                         {% for test in tests %}
                             <tr>
                                 <th>{{ test.id }}</th>
+                                <th class="text-center"><a href="#modal" data-toggle="modal"><i
+                                        class="fa fa-search-plus text-muted"></i></a></th>
                                 <th>{{ test.rayon }}</th>
                                 <th>{{ test.date_execution }}</th>
                                 {% ifequal test.status "PASS" %}
@@ -195,7 +205,9 @@
                     </table>
                 </div>
             {% else %}
-                <p>Vous devez être connecter en tant que {{ allowed_user }} pour voir cette campagne</p>
+                <div class="panel-body text-sm">
+                    <p>Vous devez etre connecter en tant que {{ allowed_user }} pour voir cette campagne</p>
+                </div>
             {% endif %}
         </section>
     </section>
@@ -215,4 +227,22 @@
             });
         });
     </script>
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Snapshot</h4>
+                </div>
+                <div class="modal-body">
+               
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 {% endblock %}

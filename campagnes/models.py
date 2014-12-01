@@ -41,11 +41,11 @@ class Rayon(models.Model):
     magasin = models.ForeignKey(Magasin)
 
     def __str__(self):
-        return "%s>%s>%s" % (self.magasin.enseigne.nom, self.magasin.ville, self._get_heirloom())
+        return "%s>%s>%s" % (self.magasin.enseigne.nom, self.magasin.ville, self._get_ancestors())
 
-    def _get_heirloom(self):
+    def _get_ancestors(self):
         if self.parent:
-            return "%s>%s" % (self.parent._get_heirloom(), self.nom)
+            return "%s>%s" % (self.parent._get_ancestors(), self.nom)
         else:
             return self.nom
 
