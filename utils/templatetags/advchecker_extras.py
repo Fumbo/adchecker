@@ -1,4 +1,5 @@
 from django import template
+from django.utils.importlib import import_module
 
 register = template.Library()
 
@@ -20,3 +21,9 @@ def add_placeholder(field, args=None):
         return field
     field.field.widget.attrs.update({"placeholder": args})
     return field
+
+
+@register.filter
+def is_inst(value, class_str):
+    split = class_str.split('.')
+    return isinstance(value, getattr(import_module('.'.join(split[:-1])), split[-1]))

@@ -82,7 +82,7 @@ class CampagnesNew(TemplateView):
             yield 'in'
 
         for rayon in rayons:
-            yield rayon.nom
+            yield rayon
             sub_cats = Rayon.objects.select_related().filter(parent=rayon, magasin=magasin_id)
             if len(sub_cats):
                 rayon.leaf = False

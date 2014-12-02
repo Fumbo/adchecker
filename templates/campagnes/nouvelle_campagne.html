@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load advchecker_extras %}
 
 {% block title %}Nouvelle Campagne{% endblock %}
 
@@ -177,7 +178,8 @@
             </header>
             <div class="panel-body">
                 Sélectionnez les rayons à tester
-                <form>
+                <form method="post" action="{% url 'campagnes:new' %}">
+                    {% csrf_token %}
                     <div id="tree">
                         {% for item in rayons %}
                             {% if item == "in" %}
@@ -189,7 +191,11 @@
                                     {% else %}
 
                                         <li>
-                                            <input type="checkbox" value="rayon_id_{{ item.id }}">{{ item }}
+                                            {% if item|is_inst:"campagnes.models.Rayon" %}
+                                                <input type="checkbox" value="rayon_id_{{ item.id }}"> {{ item.nom }}
+                                            {% else %}
+                                                <input type="checkbox"> {{ item }}
+                                            {% endif %}
                                             {% if item.leaf %}
                                                 </li>
                                             {% endif %}
@@ -197,6 +203,12 @@
                                     {% endif %}
                             {% endif %}
                         {% endfor %}
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <input type="submit" class="btn btn-primary" value="Créer">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -214,12 +226,18 @@
     <!-- initialize checkboxTree plugin -->
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#tree').tree({
+            var tree_selector = $('#tree');
+            tree_selector.tree({
                 dnd: false,
+                expandDuration: 200,
+                collapseDuration: 200,
                 onCheck: {
                     node: 'expand'
-                }
+                },
+                collapseUiIcon: 'ui-icon-plus',
+                expandUiIcon: 'ui-icon-minus'
             });
+            tree_selector.tree('collapseAll');
         });
     </script>
 {% endblock %}
