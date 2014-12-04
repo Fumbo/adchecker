@@ -42,6 +42,7 @@ class CampagnesDetail(TemplateView):
 
 class CampagnesNewForm(forms.Form):
     nom = forms.CharField()
+    annonceur = forms.CharField()
     enseignes = forms.MultipleChoiceField(choices=Enseigne.objects.all().values_list('id', 'nom'),
                                           widget=forms.CheckboxSelectMultiple)
     rayons = mptt_forms.TreeNodeMultipleChoiceField(queryset=Rayon.objects.all(),
@@ -49,6 +50,15 @@ class CampagnesNewForm(forms.Form):
                                                     level_indicator=u'')
     date_debut = forms.DateField()
     date_fin = forms.DateField()
+
+    def clean(self):
+        print self.cleaned_data
+        if all(x in self.cleaned_data for x in ['date_debut', 'date_fin']) \
+                and self.cleaned_data['date_debut'] > self.cleaned_data['date_fin']:
+            raise forms.ValidationError('La date de fin ne doit pas preceder '
+                                        'la date de debut, ici %s > %s'
+                                        % (self.cleaned_data['date_debut'], self.cleaned_data['date_fin']))
+        return super(CampagnesNewForm, self).clean()
 
 
 class CampagnesNew(FormView):

@@ -186,7 +186,7 @@
                 {% endfor %}
                 {% for error in form.non_field_errors %}
                     <div class="alert alert-danger">
-                        <strong>{{ field.label }} : {{ error|escape }}</strong>
+                        <strong>{{ error|escape }}</strong>
                     </div>
                 {% endfor %}
             {% endif %}
@@ -211,6 +211,9 @@
 
                             <p class="m-t">{{ form.nom.label }} de la campagne :</p>
                             {{ form.nom|add_class:'form-control' }}
+
+                            <p class="m-t">{{ form.annonceur.label }} :</p>
+                            {{ form.annonceur|add_class:'form-control' }}
 
                             <p class="m-t">Ensignes :</p>
                             {{ form.enseignes }}

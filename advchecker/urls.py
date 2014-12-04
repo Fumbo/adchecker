@@ -3,7 +3,6 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from advchecker.views import HomeView
-from testapp.views import TestView
 
 
 urlpatterns = patterns('',
@@ -12,7 +11,4 @@ urlpatterns = patterns('',
                        url(r'^accounts/', include('accounts.urls', namespace="accounts")),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^conditions/', TemplateView.as_view(template_name="advchecker/docs.html"), name='docs'),
-
-
-                       url(r'^tests/', TestView.as_view()),
 )

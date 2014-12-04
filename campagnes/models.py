@@ -7,6 +7,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 
+
 # ################################################################################
 # Enseigne
 class Enseigne(models.Model):
@@ -68,7 +69,8 @@ class Campagne(models.Model):
 
 class CampagneAdminForm(forms.ModelForm):
     def clean(self):
-        if self.cleaned_data['date_debut'] > self.cleaned_data['date_fin']:
+        if all(x in self.cleaned_data for x in ['date_debut', 'date_fin']) \
+                and self.cleaned_data['date_debut'] > self.cleaned_data['date_fin']:
             raise forms.ValidationError('La date de fin ne doit pas preceder '
                                         'la date de debut')
         return self.cleaned_data
