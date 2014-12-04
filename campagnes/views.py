@@ -1,6 +1,8 @@
-from django.views.generic import TemplateView
+from django import forms
+from django.views.generic import TemplateView, FormView
 
-from campagnes.models import Campagne, PlanificationCampagne, Rayon, Magasin, Enseigne
+from mptt import forms as mptt_forms
+from campagnes.models import Campagne, PlanificationCampagne, Rayon, Enseigne
 
 
 class CampagnesAll(TemplateView):
@@ -38,8 +40,29 @@ class CampagnesDetail(TemplateView):
         return context
 
 
-class CampagnesNew(TemplateView):
+class CampagnesNewForm(forms.Form):
+    nom = forms.CharField()
+    enseignes = forms.MultipleChoiceField(choices=Enseigne.objects.all().values_list('id', 'nom'),
+                                          widget=forms.CheckboxSelectMultiple)
+    rayons = mptt_forms.TreeNodeMultipleChoiceField(queryset=Rayon.objects.all(),
+                                                    widget=forms.CheckboxSelectMultiple,
+                                                    level_indicator=u'')
+    date_debut = forms.DateField()
+    date_fin = forms.DateField()
+
+
+class CampagnesNew(FormView):
     template_name = "campagnes/nouvelle_campagne.html"
+    form_class = CampagnesNewForm
+    success_url = '/campagnes/'
+
+    def form_valid(self, form):
+        return super(CampagnesNew, self).form_valid(form)
+
+    def form_invalid(self, form, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['form'] = form
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super(CampagnesNew, self).get_context_data(**kwargs)
@@ -50,44 +73,5 @@ class CampagnesNew(TemplateView):
             campagne_list = Campagne.objects.filter(user_id=self.request.user.id)
         context['campagne_list'] = campagne_list
         context['nb_campagne'] = len(campagne_list)
-        context['rayons'] = self.get_complete_tree()
+        context['rayons'] = Rayon.objects.all()
         return context
-
-    def get_complete_tree(self):
-        enseignes = Enseigne.objects.all()
-        for enseigne in enseignes:
-            yield 'in'
-            yield enseigne
-            magasins = Magasin.objects.filter(enseigne=enseigne.id)
-            if len(magasins):
-                for magasin in magasins:
-                    yield 'in'
-                    yield magasin
-                    rayons = Rayon.objects.filter(parent=None, magasin=magasin.id)
-                    if len(rayons):
-                        yield 'in'
-                        for x in self.get_rayon_tree(magasin_id=magasin.id):
-                            yield x
-                        yield 'out'
-                yield 'out'
-        yield 'out'
-
-    def get_rayon_tree(self, rayons=None, magasin_id=None):
-        """Recursively build a list of rayons. The resulting list is meant to be iterated over in a view"""
-        if rayons is None:
-            # get the root rayons
-            rayons = Rayon.objects.filter(parent=None, magasin=magasin_id)
-            rayons[0].active = True
-        else:
-            yield 'in'
-
-        for rayon in rayons:
-            yield rayon
-            sub_cats = Rayon.objects.select_related().filter(parent=rayon, magasin=magasin_id)
-            if len(sub_cats):
-                rayon.leaf = False
-                for x in self.get_rayon_tree(sub_cats, magasin_id):
-                    yield x
-            else:
-                rayon.leaf = True
-        yield 'out'

@@ -98,7 +98,7 @@
                         <ul class="nav nav-main" data-ride="collapse">
                             <li>
                                 <a href="{% url 'campagnes:index' %}" class="auto">
-                                <i class="i i-statistics icon">
+                                    <i class="i i-statistics icon">
                                     </i>
                                     <span class="font-bold">Toutes</span>
                                 </a>
@@ -123,7 +123,7 @@
                                                 <li>
                                             {% endifequal %}
                                         <a href="{% url 'campagnes:detail' campagne.id %}" class="auto">
-                                        <i class="i i-dot"></i>
+                                            <i class="i i-dot"></i>
 
                                             <span>{{ campagne }}</span>
                                         </a>
@@ -140,14 +140,14 @@
                                 </a>
 
                                 {% if super %}
-                                <li>
-                                    <a href="{% url 'admin:index' %}" class="auto">
-                                    <i class="fa fa-cogs icon">
-                                        </i>
-                                        <span class="font-bold">Administration</span>
-                                    </a>
-                                </li>
-                            {% endif %}
+                                    <li>
+                                        <a href="{% url 'admin:index' %}" class="auto">
+                                            <i class="fa fa-cogs icon">
+                                            </i>
+                                            <span class="font-bold">Administration</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
                         </ul>
                     </nav>
                     <!-- / nav -->
@@ -178,7 +178,8 @@
                         <tr>
                             <th width="8%">#</th>
                             <th width="10%">Img</th>
-                            <th width="47%">Rayon</th>
+                            <th width="20%">Magasin</th>
+                            <th width="27%">Rayon</th>
                             <th width="25%">Date d'execution</th>
                             <th width="10%">Status</th>
                         </tr>
@@ -189,6 +190,7 @@
                                 <th>{{ test.id }}</th>
                                 <th class="text-center"><a href="#modal" data-toggle="modal"><i
                                         class="fa fa-search-plus text-muted"></i></a></th>
+                                <th>{{ test.magasin }}</th>
                                 <th>{{ test.rayon }}</th>
                                 <th>{{ test.date_execution }}</th>
                                 {% ifequal test.status "PASS" %}
@@ -235,7 +237,7 @@
                     <h4 class="modal-title">Snapshot</h4>
                 </div>
                 <div class="modal-body">
-               
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default btn-rounded" data-dismiss="modal">Close</button>

@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% load advchecker_extras %}
+{% load mptt_tags %}
+
 
 {% block title %}Nouvelle Campagne{% endblock %}
 
 {% block headers %}
-    <link rel="stylesheet" href="{% static "js/datatables/datatables.css" %}" type="text/css"/>
+    <link href="{% static 'datepicker/css/datepicker.css' %}" rel="stylesheet">
 {% endblock %}
 
 
@@ -171,59 +173,112 @@
 
 
 {% block content %}
-    <section class="scrollable wrapper">
-        <section class="panel panel-default">
-            <header class="panel-heading font-bold">
-                Créer une nouvelle campagne
-            </header>
-            <div class="panel-body">
-                Sélectionnez les rayons à tester
-                <form method="post" action="{% url 'campagnes:new' %}">
-                    {% csrf_token %}
-                    <div id="tree">
-                        {% for item in rayons %}
-                            {% if item == "in" %}
-                                <ul>
-                                    {% else %}
-                                    {% if item == "out" %}
-                                        </ul>
-                                        </li>
-                                    {% else %}
-
-                                        <li>
-                                            {% if item|is_inst:"campagnes.models.Rayon" %}
-                                                <input type="checkbox" value="rayon_id_{{ item.id }}"> {{ item.nom }}
-                                            {% else %}
-                                                <input type="checkbox"> {{ item }}
-                                            {% endif %}
-                                            {% if item.leaf %}
-                                                </li>
-                                            {% endif %}
-
-                                    {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                    <div class="line line-dashed b-b line-lg pull-in"></div>
-                    <div class="form-group">
-                        <div class="col-sm-4">
-                            <input type="submit" class="btn btn-primary" value="Créer">
+    <section class="scrollable padder">
+        <div class="m-b-md">
+            <h3 class="m-b-none">Céer une nouvelle campagne</h3>
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ field.label }} : {{ error|escape }}</strong>
                         </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ field.label }} : {{ error|escape }}</strong>
                     </div>
-                </form>
-            </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <section class="panel panel-default">
+            <form id="wizardform" method="post" action="{% url 'campagnes:new' %}">
+                {% csrf_token %}
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs font-bold">
+                        <li><a href="#step1" data-toggle="tab">Etape 1</a></li>
+                        <li><a href="#step2" data-toggle="tab">Etape 2</a></li>
+                        <li><a href="#step3" data-toggle="tab">Etape 3</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="progress progress-xs m-t-md">
+                        <div class="progress-bar bg-success"></div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="step1">
+                            <h4>Sélectionnez le nom de votre campagne et les ensignes sur les quelles travailler</h4>
+
+                            <p class="m-t">{{ form.nom.label }} de la campagne :</p>
+                            {{ form.nom|add_class:'form-control' }}
+
+                            <p class="m-t">Ensignes :</p>
+                            {{ form.enseignes }}
+                        </div>
+                        <div class="tab-pane" id="step2">
+                            <h4>Sélectionnez les rayons à tester</h4>
+
+                            <div id="tree">
+                                <ul class="id_rayons">
+                                    {% recursetree rayons %}
+                                        <li>
+                                            {% if node.id|slugify in form.rayons.value %}
+                                                <label for="id_rayons_{{ node.id }}">
+                                                    <input id="id_rayons_{{ node.id }}" name="rayons"
+                                                           type="checkbox" value="{{ node.id }}" checked> {{ node.nom }}
+                                                </label>
+                                            {% else %}
+                                                <label for="id_rayons_{{ node.id }}">
+                                                    <input id="id_rayons_{{ node.id }}" name="rayons"
+                                                           type="checkbox" value="{{ node.id }}"> {{ node.nom }}
+                                                </label>
+                                            {% endif %}
+                                            {% if not node.is_leaf_node %}
+                                                <ul class="children">
+                                                    {{ children }}
+                                                </ul>
+                                            {% endif %}
+                                        </li>
+                                    {% endrecursetree %}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="step3">
+                            <h4>Sélectionnez la date de début et la date de fin de la campagne</h4>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="m-t">Date de début :</p>
+                                    {{ form.date_debut|add_class:'datepicker form-control' }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    <p class="m-t">Date de fin :</p>
+                                    {{ form.date_fin|add_class:'datepicker form-control' }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <ul class="pager wizard m-b-sm">
+                            <li class="previous"><a href="#">Précédant</a></li>
+                            <li class="next"><a href="#">Suivant</a></li>
+                            <li class="finish" style="float: right"><input type="submit" class="btn btn-primary"
+                                                                           value="Créer"></li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
         </section>
     </section>
 {% endblock %}
 
 {% block scripts %}
-    <!-- jQueryUI libraries -->
+    <!-- include plugin-tree -->
     <script type="text/javascript" src="{% static "js/jquery-ui-1.11.2/jquery-ui.js" %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui-1.11.2/jquery-ui.css" %}"/>
-    <!-- include plugin-tree -->
     <script type="text/javascript" src="{% static "js/tree/jquery.tree.min.js" %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static "js/tree/jquery.tree.min.css" %}"/>
-    <!-- initialize checkboxTree plugin -->
     <script type="text/javascript">
         $(document).ready(function () {
             var tree_selector = $('#tree');
@@ -238,6 +293,16 @@
                 expandUiIcon: 'ui-icon-minus'
             });
             tree_selector.tree('collapseAll');
+        });
+    </script>
+    <script src="{% static 'js/wizard/jquery.bootstrap.wizard.js' %}"></script>
+    <script src="{% static 'js/wizard/new_campagne.js' %}"></script>
+    <script src="{% static 'datepicker/js/bootstrap-datepicker.js' %}"></script>
+    <script>
+        $(function () {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy'
+            })
         });
     </script>
 {% endblock %}

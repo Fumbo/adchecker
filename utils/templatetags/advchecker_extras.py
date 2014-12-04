@@ -27,3 +27,12 @@ def add_placeholder(field, args=None):
 def is_inst(value, class_str):
     split = class_str.split('.')
     return isinstance(value, getattr(import_module('.'.join(split[:-1])), split[-1]))
+
+
+@register.filter
+def add_data_parsley_mincheck(field, args=None):
+    if not args:
+        return field
+    field.field.widget.attrs.update({"data-parsley-mincheck": args})
+    field.field.widget.attrs.update({"required": ''})
+    return field

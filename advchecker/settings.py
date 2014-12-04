@@ -42,6 +42,8 @@ INSTALLED_APPS = (
     'utils',
     'campagnes',
     'advchecker',
+    'mptt',
+    'fancytree',
     'testapp',
 )
 
@@ -133,7 +135,7 @@ SUIT_CONFIG = {
     # 'SEARCH_URL': '/admin/auth/user/',
     # 'MENU_ICONS': {
     # 'sites': 'icon-leaf',
-    #    'auth': 'icon-lock',
+    # 'auth': 'icon-lock',
     # },
     # 'MENU_OPEN_FIRST_CHILD': True, # Default True
     # 'MENU_EXCLUDE': ('auth.group',),

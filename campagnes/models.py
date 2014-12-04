@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.contrib import admin
 
+from mptt.models import MPTTModel, TreeForeignKey
+
+
 
 # ################################################################################
 # Enseigne
@@ -35,17 +38,13 @@ class MagasinAdmin(admin.ModelAdmin):
 
 # ###############################################################################
 # Rayon
-class Rayon(models.Model):
+class Rayon(MPTTModel):
     nom = models.CharField(max_length=50)
-    parent = models.ForeignKey('self', blank=True, null=True)
-    magasin = models.ForeignKey(Magasin)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
     def __str__(self):
-        return "%s>%s>%s" % (self.magasin.enseigne.nom, self.magasin.ville, self._get_ancestors())
-
-    def _get_ancestors(self):
         if self.parent:
-            return "%s>%s" % (self.parent._get_ancestors(), self.nom)
+            return "%s>%s" % (self.parent.__str__(), self.nom)
         else:
             return self.nom
 
@@ -92,4 +91,5 @@ class PlanificationCampagne(models.Model):
     campagne = models.ForeignKey(Campagne)
     date_execution = models.DateTimeField()
     rayon = models.ForeignKey(Rayon)
+    magasin = models.ForeignKey(Magasin)
     status = models.CharField(max_length=4)  # PASS|FAIL|BUG|SKIP
