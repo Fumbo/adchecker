@@ -2,10 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.db import models
 from django.contrib import admin
-
 from mptt.models import MPTTModel, TreeForeignKey
-
-
 
 
 # ################################################################################
@@ -41,6 +38,7 @@ class MagasinAdmin(admin.ModelAdmin):
 # Rayon
 class Rayon(MPTTModel):
     nom = models.CharField(max_length=50)
+    identifiant = models.CharField(max_length=50)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
     def __str__(self):
@@ -48,6 +46,12 @@ class Rayon(MPTTModel):
             return "%s>%s" % (self.parent.__str__(), self.nom)
         else:
             return self.nom
+
+    def get_identifiant_path(self):
+        if self.parent:
+            return "%s/%s" % (self.parent.get_identifiant_path(), self.identifiant)
+        else:
+            return self.identifiant
 
 
 class RayonAdmin(admin.ModelAdmin):
@@ -81,6 +85,7 @@ class CampagneAdminForm(forms.ModelForm):
 
 
 class CampagneAdmin(admin.ModelAdmin):
+    list_display = ('id', '__str__')
     form = CampagneAdminForm
     formfield_overrides = {
         models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple}
@@ -94,4 +99,12 @@ class PlanificationCampagne(models.Model):
     date_execution = models.DateTimeField()
     rayon = models.ForeignKey(Rayon)
     magasin = models.ForeignKey(Magasin)
-    status = models.CharField(max_length=4)  # PASS|FAIL|BUG|SKIP
+    status = models.CharField(max_length=4)  # PASS|FAIL|BUG|SKIP|WAIT
+    screenshot = models.ImageField(blank=True, null=True)
+
+    def __str__(self):
+        return "%s" % self.screenshot
+
+
+class PlanificationCampagneAdmin(admin.ModelAdmin):
+    list_display = ('campagne', 'magasin', 'rayon', 'date_execution', 'screenshot', 'status')

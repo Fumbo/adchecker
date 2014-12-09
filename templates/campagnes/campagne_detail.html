@@ -8,79 +8,7 @@
 {% endblock %}
 
 {% block header-right %}
-    <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
-        <!-- Notifications -->
-        <li class="hidden-xs">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="i i-chat3"></i>
-                <span class="badge badge-sm up bg-danger count">2</span>
-            </a>
-            <section class="dropdown-menu aside-xl animated flipInY">
-                <section class="panel bg-white">
-                    <div class="panel-heading b-light bg-light">
-                        <strong>Vous avez <span class="count">2</span> notifications</strong>
-                    </div>
-                    <div class="list-group list-group-alt">
-                        <a href="#" class="media list-group-item">
-                  <span class="pull-left thumb-sm">
-                    <img src="{% static "images/a0.png" %}" alt="..." class="img-circle">
-                  </span>
-                  <span class="media-body block m-b-none">
-                    Use awesome animate.css<br>
-                    <small class="text-muted">10 minutes ago</small>
-                  </span>
-                        </a>
-                        <a href="#" class="media list-group-item">
-                  <span class="media-body block m-b-none">
-                    1.0 initial released<br>
-                    <small class="text-muted">1 hour ago</small>
-                  </span>
-                        </a>
-                    </div>
-                    <div class="panel-footer text-sm">
-                        <a href="#" class="pull-right"><i class="fa fa-cog"></i></a>
-                        <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
-                    </div>
-                </section>
-            </section>
-        </li>
-        <!-- / Notifications -->
-        <!-- User -->
-        <li id="profile" class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="thumb-sm avatar pull-left">
-              <img src="{% static "images/a0.png" %}" alt="...">
-            </span>
-                {{ user }}<b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu animated fadeInRight">
-                <li>
-                    <span class="arrow top"></span>
-                    <a href="#">Settings</a>
-                </li>
-                <li>
-                    <a href="profile.html">Profile</a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="badge bg-danger pull-right">3</span>
-                        Notifications
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'docs' %}">Docs</a>
-                </li>
-                <li id="help">
-                    <a href="#">Help</a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="{% url 'accounts:logout' %}" data-toggle="ajaxModal">Logout</a>
-                </li>
-            </ul>
-        </li>
-        <!-- / User -->
-    </ul>
+
 {% endblock %}
 
 {% block menu %}
@@ -101,6 +29,13 @@
                                     <i class="i i-statistics icon">
                                     </i>
                                     <span class="font-bold">Toutes</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'campagnes:screenshots' %}" class="auto">
+                                    <i class="i i-screen icon">
+                                    </i>
+                                    <span class="font-bold">Screenshots</span>
                                 </a>
                             </li>
                             {% if nb_campagne > 0 %}
@@ -132,22 +67,16 @@
                                     </ul>
                                 </li>
                             {% endif %}
-                            <li>
-                                <a href="{% url 'campagnes:new' %}" class="auto">
-                                    <i class="fa fa-plus icon">
-                                    </i>
-                                    <span class="font-bold">Nouvelle campagne</span>
-                                </a>
 
-                                {% if super %}
-                                    <li>
-                                        <a href="{% url 'admin:index' %}" class="auto">
-                                            <i class="fa fa-cogs icon">
-                                            </i>
-                                            <span class="font-bold">Administration</span>
-                                        </a>
-                                    </li>
-                                {% endif %}
+                            {% if super %}
+                                <li>
+                                    <a href="{% url 'admin:index' %}" class="auto">
+                                        <i class="fa fa-cogs icon">
+                                        </i>
+                                        <span class="font-bold">Administration</span>
+                                    </a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </nav>
                     <!-- / nav -->
@@ -187,20 +116,40 @@
                         <tbody>
                         {% for test in tests %}
                             <tr>
-                                <th>{{ test.id }}</th>
-                                <th class="text-center"><a href="#modal" data-toggle="modal"><i
-                                        class="fa fa-search-plus text-muted"></i></a></th>
-                                <th>{{ test.magasin }}</th>
-                                <th>{{ test.rayon }}</th>
-                                <th>{{ test.date_execution }}</th>
-                                {% ifequal test.status "PASS" %}
-                                    <th class="text-center"><i class="fa fa-check text-success text"
-                                                               title="PASS"></i></th>
-                                {% endifequal %}
-                                {% ifequal test.status "FAIL" %}
-                                    <th class="text-center"><i class="fa fa-times text-danger text"
-                                                               title="FAIL"></i></th>
-                                {% endifequal %}
+                                <td>{{ test.id }}</td>
+                                {% if test.screenshot %}
+                                    {% if test.status == "PASS" %}
+                                        <td class="text-center">
+                                            <a class="image" href="#modal" data-toggle="modal"
+                                               data-src="/static/screenshots/{{ test.screenshot }}">
+                                                <i class="fa fa-camera text-muted"></i>
+                                            </a>
+                                        </td>
+                                    {% else %}
+                                        <td class="text-center">
+                                            <a href="#">
+                                                <i class="fa fa-calendar text-muted"></i>
+                                            </a>
+                                        </td>
+                                    {% endif %}
+                                {% else %}
+                                    <td class="text-center image">
+                                        <i class="fa fa-calendar text-muted"></i></td>
+                                {% endif %}
+                                <td>{{ test.magasin }}</td>
+                                <td>{{ test.rayon }}</td>
+                                <td>{{ test.date_execution }}</td>
+                                {% if test.status == "PASS" %}
+                                    <td class="text-center"><i class="fa fa-check text-success text"
+                                                               title="PASS"></i></td>
+                                {% elif test.status == "FAIL" %}
+                                    <td class="text-center"><i class="fa fa-times text-danger text"
+                                                               title="FAIL"></i></td>
+                                {% elif test.status == "WAIT" %}
+                                    <td class="text-center"><i class="i i-clock2" title="WAIT"></i></td>
+                                {% else %}
+                                    <td class="text-center"><i class="fa fa-wheelchair" title="WAIT"></i></td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -220,25 +169,28 @@
     <script src="{% static "js/datatables/jquery.dataTables.min.js" %}"></script>
     <script>
         $(document).ready(function () {
-            $('#campagnes').DataTable({
+            var campagnes_table = $('#campagnes');
+            campagnes_table.DataTable({
                 "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
                 pagingType: "simple_numbers",
                 "columnDefs": [
                     { "type": "title-string", targets: 5}
                 ]
             });
+            campagnes_table.on('click', 'a.image', function () {
+                $('#img-dest').attr('src', $(this).data('src'));
+            });
         });
     </script>
+    <!-- Modal -->
     <div class="modal fade" id="modal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Snapshot</h4>
                 </div>
-                <div class="modal-body">
-
-                </div>
+                <img id="img-dest" width="890" src="#" alt=""></a>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default btn-rounded" data-dismiss="modal">Close</button>
                 </div>
@@ -247,4 +199,5 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <!-- /Modal -->
 {% endblock %}

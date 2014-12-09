@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Screenshots{% endblock %}
+
+{% block headers %}
+{% endblock %}
+
+{% block header-right %}
+    <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
+        <!-- User -->
+        <li id="profile" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="thumb-sm avatar pull-left">
+              <img src="{% static "images/a0.png" %}" alt="...">
+            </span>
+                {{ user }}<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu animated fadeInRight">
+                <li>
+                    <span class="arrow top"></span>
+                    <a href="#">Settings</a>
+                </li>
+                <li>
+                    <a href="profile.html">Profile</a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="badge bg-danger pull-right">3</span>
+                        Notifications
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'docs' %}">Docs</a>
+                </li>
+                <li id="help">
+                    <a href="#">Help</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="{% url 'accounts:logout' %}" data-toggle="ajaxModal">Logout</a>
+                </li>
+            </ul>
+        </li>
+        <!-- / User -->
+    </ul>
+{% endblock %}
+
+{% block menu %}
+    <!-- .aside -->
+    <aside class="bg-black aside-md hidden-print hidden-xs" id="nav">
+        <section class="vbox">
+            <section class="w-f scrollable">
+                <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0"
+                     data-size="10px"
+                     data-railOpacity="0.2">
+
+                    <!-- nav -->
+                    <nav class="nav-primary hidden-xs">
+                        <div class="text-muted text-sm hidden-nav-xs padder m-t-sm m-b-sm">Mes Campagnes</div>
+                        <ul class="nav nav-main" data-ride="collapse">
+                            <li>
+                                <a href="{% url 'index' %}" class="auto">
+                                    <i class="i i-statistics icon">
+                                    </i>
+                                    <span class="font-bold">Toutes</span>
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a href="{% url 'campagnes:screenshots' %}" class="auto">
+                                    <i class="i i-screen icon">
+                                    </i>
+                                    <span class="font-bold">Screenshots</span>
+                                </a>
+                            </li>
+                            {% if nb_campagne > 0 %}
+                                <li>
+                                    <a href="#" class="auto">
+                                        <span class="pull-right text-muted">
+                                            <i class="i i-circle-sm-o text"></i>
+                                            <i class="i i-circle-sm text-active"></i>
+                                        </span>
+                                        <b class="badge bg-danger pull-right">{{ nb_campagne }}</b>
+                                        <i class="i i-stack icon">
+                                        </i>
+                                        <span class="font-bold">Details</span>
+                                    </a>
+                                    <ul class="nav dk" style="display: block;">
+                                        {% for campagne in campagne_list %}
+                                            <li>
+                                                <a href="{% url 'campagnes:detail' campagne.id %}" class="auto">
+                                                    <i class="i i-dot"></i>
+
+                                                    <span>{{ campagne }}</span>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <a href="{% url 'campagnes:new' %}" class="auto">
+                                    <i class="fa fa-plus icon">
+                                    </i>
+                                    <span class="font-bold">Nouvelle campagne</span>
+                                </a>
+                            </li>
+                            {% if super %}
+                                <li>
+                                    <a href="{% url 'admin:index' %}" class="auto">
+                                        <i class="fa fa-cogs icon">
+                                        </i>
+                                        <span class="font-bold">Administration</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    <!-- / nav -->
+                </div>
+            </section>
+
+            <footer class="footer hidden-xs no-padder text-center-nav-xs">
+                <a href="#nav" data-toggle="class:nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
+                    <i class="i i-circleleft text"></i>
+                    <i class="i i-circleright text-active"></i>
+                </a>
+            </footer>
+        </section>
+    </aside>
+    <!-- /.aside -->
+
+{% endblock %}
+
+{% block content %}
+    <section class="vbox">
+        <header class="header bg-light lt b-b b-light">
+            <p class="h4 font-thin pull-left m-r m-b-sm">Screenshots</p>
+            <a class="btn btn-sm btn-info btn-rounded btn-icon"><i class="i i-cloud-upload"></i></a>
+
+            <form method="post" class="m-t-sm pull-right pull-none-xs input-s-lg m-b-sm">
+                <div class="input-group">
+                    <input type="text" id="address" name="address" class="input-sm form-control" placeholder="Search">
+                    <span class="input-group-btn">
+                      <button class="btn btn-sm btn-default" type="submit">Go!</button>
+                    </span>
+                </div>
+            </form>
+        </header>
+        <section class="scrollable wrapper">
+            <div class="row">
+                <div class="col-md-3 col-md-push-9">
+                    <div class="panel">
+                        <div class="panel-heading b-b">Filter</div>
+                        <div class="panel-body">
+                            {% if rayons %}
+                                <ul class="list-unstyled m-t-n-sm">
+                                    {% for rayon in rayons %}
+                                        <li class="checkbox i-checks">
+                                            <label>
+                                                <input type="checkbox" checked><i></i> {{ rayon }}
+                                            </label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            <div class="line line-dashed b-b line-lg"></div>
+                            <ul class="list-unstyled">
+                                <li class="radio i-checks">
+                                    <label>
+                                        <input type="radio" name="filter" checked><i></i> Aujourd'hui
+                                    </label>
+                                </li>
+                                <li class="radio i-checks">
+                                    <label>
+                                        <input type="radio" name="filter"><i></i> La Semaine dernière
+                                    </label>
+                                </li>
+                                <li class="radio i-checks">
+                                    <label>
+                                        <input type="radio" name="filter"><i></i> Le moi dernier
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="gallery" class="col-md-9 col-md-pull-3">
+                    <div class="row row-sm">
+                        {% for test in tests %}
+                            {% if test.screenshot %}
+                                <div class="clearfix visible-xs"></div>
+                                <div class="col-xs-6 col-sm-4 col-md-3">
+                                    <div class="thumbnail">
+                                        <a href="#modal" data-toggle="modal">
+                                            <img src="/static/screenshots/{{ test.screenshot }}">
+                                        </a>
+
+                                        <div class="caption">
+                                            <p class="text-ellipsis m-b-none">{{ test.magasin.enseigne }}
+                                                - {{ test.magasin }} <br/> {{ test.rayon }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <div class="btn-group m-r">
+                            <button type="button" class="btn btn-default"><i class="i i-arrow-left4"></i></button>
+                            <button type="button" class="btn btn-default"><i class="i i-arrow-right4"></i></button>
+                        </div>
+                        Affichage de <strong>{{ tests.count }}</strong> sur {{ tests.count }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#gallery').on('click', 'img', function () {
+                $('#img-dest').attr('src', $(this).attr('src'));
+            });
+        });
+    </script>
+    <!-- Modal -->
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Snapshot</h4>
+                </div>
+                <img id="img-dest" width="890" src="#" alt=""></a>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /Modal -->
+{% endblock %}
