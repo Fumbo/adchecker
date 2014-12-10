@@ -3,9 +3,10 @@ import sys
 from subprocess import call
 
 import django
+from django.utils import timezone
 
 
-sys.path = ['../'] + sys.path
+sys.path = [os.environ.get('ADCHECKER_ROOT', '../')] + sys.path
 
 os.environ.setdefault(
     "DJANGO_SETTINGS_MODULE",
@@ -24,14 +25,14 @@ class SnapRobot:
         self.enseigne = enseigne
 
     def take_screenshot(self, folder, filename):
-        call(["mkdir", "-p", '../static/screenshots/' + folder])
+        call(["mkdir", "-p", os.environ.get('ADCHECKER_ROOT', '../') + 'static/screenshots/' + folder])
         self.driver.set_window_size(1920, 1080)
         scheight = .1
         while scheight < 9.9:
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight/%s);" % scheight)
             scheight += .1
         self.driver.execute_script("window.scrollTo(0, 0);")
-        self.driver.save_screenshot('../static/screenshots/' + filename)
+        self.driver.save_screenshot(os.environ.get('ADCHECKER_ROOT', '../') + 'static/screenshots/' + filename)
 
 
 class AuchanRobot(SnapRobot):
@@ -61,7 +62,12 @@ class AuchanRobot(SnapRobot):
 
 if __name__ == '__main__':
     auchan = AuchanRobot()
-    for test in PlanificationCampagne.objects.filter(status="WAIT"):
+    query_tests = PlanificationCampagne.objects.filter(
+        status="WAIT"
+    ).filter(
+        date_execution__lte=timezone.localtime(timezone.now())
+    )
+    for test in query_tests:
         auchan.go_to_magasin(test.magasin)
         auchan.go_to_rayon(test.rayon.get_identifiant_path())
         folder = "%s_%s/%s/%s" % (test.campagne.id, test.campagne.nom, test.magasin.enseigne.nom,
