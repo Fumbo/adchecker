@@ -3,7 +3,6 @@ import sys
 from subprocess import call
 
 import django
-from django.utils import timezone
 
 
 sys.path = ['../'] + sys.path
@@ -62,12 +61,7 @@ class AuchanRobot(SnapRobot):
 
 if __name__ == '__main__':
     auchan = AuchanRobot()
-    query_tests = PlanificationCampagne.objects.filter(
-        status="WAIT"
-    ).filter(
-        date_execution__lte=timezone.localtime(timezone.now())
-    )
-    for test in query_tests:
+    for test in PlanificationCampagne.objects.filter(status="WAIT"):
         auchan.go_to_magasin(test.magasin)
         auchan.go_to_rayon(test.rayon.get_identifiant_path())
         folder = "%s_%s/%s/%s" % (test.campagne.id, test.campagne.nom, test.magasin.enseigne.nom,
