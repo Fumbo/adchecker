@@ -167,21 +167,7 @@
 {% block scripts %}
     <script src="{% static "js/intro/intro_campagne_index.js" %}"></script>
     <script src="{% static "js/datatables/jquery.dataTables.min.js" %}"></script>
-    <script>
-        $(document).ready(function () {
-            var campagnes_table = $('#campagnes');
-            campagnes_table.DataTable({
-                "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-                pagingType: "simple_numbers",
-                "columnDefs": [
-                    { "type": "title-string", targets: 5}
-                ]
-            });
-            campagnes_table.on('click', 'a.image', function () {
-                $('#img-dest').attr('src', $(this).data('src'));
-            });
-        });
-    </script>
+    <script src="{% static "js/campagnes/detail.js" %}"></script>
     <!-- Modal -->
     <div class="modal fade" id="modal">
         <div class="modal-dialog modal-lg">
@@ -190,7 +176,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Snapshot</h4>
                 </div>
-                <img id="img-dest" width="890" src="#" alt=""></a>
+                <img id="img-dest" width="100%" src="#" alt=""></a>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default btn-rounded" data-dismiss="modal">Close</button>
                 </div>
