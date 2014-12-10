@@ -68,13 +68,13 @@ if __name__ == '__main__':
         date_execution__lte=timezone.localtime(timezone.now())
     )
     for test in query_tests:
-        print "----Navigation sur %s>%s>%s" % test.magasin.enseigne.nom, test.magasin.ville, test.rayon
+        print("----Navigation sur %s>%s>%s" % (test.magasin.enseigne.nom, test.magasin.ville, test.rayon))
         auchan.go_to_magasin(test.magasin)
         auchan.go_to_rayon(test.rayon.get_identifiant_path())
         folder = "%s_%s/%s/%s" % (test.campagne.id, test.campagne.nom, test.magasin.enseigne.nom,
                                   test.magasin.identifiant)
         screen_name = '%s/%s.png' % (folder, test.id)
-        print "----Screenshot : %s" % screen_name
+        print("----Screenshot : %s" % screen_name)
         auchan.take_screenshot(folder, screen_name)
         test.screenshot = screen_name
         test.status = "PASS"
