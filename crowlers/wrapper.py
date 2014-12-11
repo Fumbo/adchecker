@@ -69,7 +69,7 @@ if __name__ == '__main__':
         date_execution__lte=timezone.localtime(timezone.now())
     )
     if not query_tests:
-        print("----Aucun nouveaux tests à faire")
+        print("----Aucun nouveaux tests a faire")
         sys.exit(1)
 
     for test in query_tests:
