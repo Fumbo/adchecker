@@ -1,3 +1,4 @@
+# coding=utf-8
 import os
 import sys
 from subprocess import call
@@ -67,6 +68,10 @@ if __name__ == '__main__':
     ).filter(
         date_execution__lte=timezone.localtime(timezone.now())
     )
+    if not query_tests:
+        print("----Aucun nouveaux tests à faire")
+        sys.exit(1)
+
     for test in query_tests:
         print("----Navigation sur %s>%s>%s" % (test.magasin.enseigne.nom, test.magasin.ville, test.rayon))
         auchan.go_to_magasin(test.magasin)
@@ -79,3 +84,4 @@ if __name__ == '__main__':
         test.screenshot = screen_name
         test.status = "PASS"
         test.save()
+    sys.exit(0)
