@@ -117,7 +117,7 @@
                         {% for test in tests %}
                             <tr>
                                 <td>{{ test.id }}</td>
-                                {% if test.screenshot %}
+                                {% if test.screenshot and test.status == "PASS" %}
                                         <td class="text-center">
                                             <a class="image" href="#modal" data-toggle="modal"
                                                data-src="/static/screenshots/{{ test.screenshot }}">
