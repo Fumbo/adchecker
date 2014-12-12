@@ -189,11 +189,10 @@
                     <div class="row row-sm">
                         {% for test in tests %}
                             {% if test.screenshot %}
-                                <div class="clearfix visible-xs"></div>
-                                <div class="col-xs-6 col-sm-4 col-md-3">
+                                <div class="col-xs-3 col-sm3 col-md-3">
                                     <div class="thumbnail">
                                         <a href="#modal" data-toggle="modal">
-                                            <img src="/static/screenshots/{{ test.screenshot }}">
+                                            <img src="{{ MEDIA_URL }}screenshots/{{ test.screenshot }}">
                                         </a>
 
                                         <div class="caption">

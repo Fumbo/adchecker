@@ -67,6 +67,13 @@
                                     </ul>
                                 </li>
                             {% endif %}
+                            <li>
+                                <a href="{% url 'campagnes:new' %}" class="auto">
+                                    <i class="fa fa-plus icon">
+                                    </i>
+                                    <span class="font-bold">Nouvelle campagne</span>
+                                </a>
+                            </li>
 
                             {% if super %}
                                 <li>
@@ -120,8 +127,8 @@
                                 {% if test.screenshot and test.status == "PASS" %}
                                         <td class="text-center">
                                             <a class="image" href="#modal" data-toggle="modal"
-                                               data-src="/static/screenshots/{{ test.screenshot }}">
-                                                <i class="fa fa-camera text-muted"></i>
+                                               data-src="{{ MEDIA_URL }}screenshots/{{ test.screenshot }}">
+                                            <i class="fa fa-camera text-muted"></i>
                                             </a>
                                         </td>
                                 {% else %}

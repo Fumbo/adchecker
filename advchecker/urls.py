@@ -10,5 +10,12 @@ urlpatterns = patterns('',
                        url(r'^campagnes/', include('campagnes.urls', namespace="campagnes")),
                        url(r'^accounts/', include('accounts.urls', namespace="accounts")),
                        url(r'^admin/', include(admin.site.urls)),
-                       url(r'^conditions/', TemplateView.as_view(template_name="advchecker/docs.html"), name='docs'),
-)
+                       url(r'^conditions/', TemplateView.as_view(template_name="advchecker/docs.html"), name='docs'))
+
+from django.conf import settings
+# # debug stuff to serve static media
+if settings.DEBUG:
+    urlpatterns += patterns('',
+                            (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+                             {'document_root': settings.MEDIA_ROOT}),
+    )

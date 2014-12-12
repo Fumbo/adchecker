@@ -15,6 +15,10 @@ class Enseigne(models.Model):
         return "%s" % self.nom
 
 
+class EnseigneAdmin(admin.ModelAdmin):
+    list_display = ('id', '__str__')
+
+
 # ################################################################################
 # Magasin
 class Magasin(models.Model):
