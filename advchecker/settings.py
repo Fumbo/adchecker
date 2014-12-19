@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     'utils',
     'campagnes',
     'advchecker',
-    'mptt'
+    'mptt',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -145,7 +145,7 @@ SUIT_CONFIG = {
     # 'MENU': (
     # 'sites',
     # {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
-    #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
+    # {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
     #     {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
     # ),
 

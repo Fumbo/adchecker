@@ -42,7 +42,7 @@ class MagasinAdmin(admin.ModelAdmin):
 # Rayon
 class Rayon(MPTTModel):
     nom = models.CharField(max_length=50)
-    identifiant = models.CharField(max_length=50)
+    path = models.CharField(max_length=50)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
     def __str__(self):
@@ -51,9 +51,9 @@ class Rayon(MPTTModel):
         else:
             return self.nom
 
-    def get_identifiant_path(self):
+    def get_path(self):
         if self.parent:
-            return "%s/%s" % (self.parent.get_identifiant_path(), self.identifiant)
+            return "%s/%s" % (self.parent.get_path(), self.path)
         else:
             return self.identifiant
 
@@ -64,10 +64,15 @@ class RayonAdmin(admin.ModelAdmin):
 
 # ###############################################################################
 # Campagne
+def content_file_name(instance, filename):
+    return '/'.join(['upload', instance.id + '_' + instance.nom, filename])
+
+
 class Campagne(models.Model):
     nom = models.CharField(max_length=50)
     annonceur = models.CharField(max_length=50)
     user = models.ForeignKey(User)
+    publicite = models.ImageField(upload_to=content_file_name)
     date_debut = models.DateField()
     date_fin = models.DateField()
 

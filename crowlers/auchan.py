@@ -34,7 +34,7 @@ class Crowler(SnapRobot):
 
     def execute(self, test):
         self.go_to_magasin(test.magasin)
-        self.go_to_rayon(test.rayon.get_identifiant_path())
+        self.go_to_rayon(test.rayon.get_path())
         folder = "%s_%s/%s/%s" % (test.campagne.id, test.campagne.nom, test.magasin.enseigne.nom,
                                   test.magasin.identifiant)
         screen_name = '%s/%s.png' % (folder, test.id)

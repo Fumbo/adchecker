@@ -141,7 +141,7 @@
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane" id="step1">
-                            <h4>Sélectionnez le nom de votre campagne et les ensignes sur les quelles travailler</h4>
+                            <h4>Sélectionnez le nom de votre campagne et les enseignes sur les quelles travailler</h4>
 
                             <p class="m-t">{{ form.nom.label }} de la campagne :</p>
                             {{ form.nom|add_class:'form-control' }}
@@ -149,7 +149,10 @@
                             <p class="m-t">{{ form.annonceur.label }} :</p>
                             {{ form.annonceur|add_class:'form-control' }}
 
-                            <p class="m-t">Ensignes :</p>
+                            <p class="m-t">Ajouter votre publicité :</p>
+                            {{ form.publicite }}
+
+                            <p class="m-t">Enseignes :</p>
                             {{ form.enseignes }}
                         </div>
                         <div class="tab-pane" id="step2">

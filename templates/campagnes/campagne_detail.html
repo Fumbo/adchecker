@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load advchecker_extras %}
 
 {% block title %}{{ current_campagne }}{% endblock %}
 
@@ -123,14 +124,14 @@
                         <tbody>
                         {% for test in tests %}
                             <tr>
-                                <td>{{ test.id }}</td>
+                                <td>{{ forloop.counter }}</td>
                                 {% if test.screenshot and test.status == "PASS" %}
-                                        <td class="text-center">
-                                            <a class="image" href="#modal" data-toggle="modal"
-                                               data-src="{{ MEDIA_URL }}screenshots/{{ test.screenshot }}">
+                                    <td class="text-center">
+                                        <a class="image" href="#modal" data-toggle="modal"
+                                           data-src="{{ MEDIA_URL }}screenshots/{{ test.screenshot }}">
                                             <i class="fa fa-camera text-muted"></i>
-                                            </a>
-                                        </td>
+                                        </a>
+                                    </td>
                                 {% else %}
                                     <td class="text-center image">
                                     </td>

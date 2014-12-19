@@ -45,6 +45,7 @@ class CampagnesDetail(TemplateView):
 class CampagnesNewForm(forms.Form):
     nom = forms.CharField()
     annonceur = forms.CharField()
+    publicite = forms.ImageField()
     enseignes = forms.ModelMultipleChoiceField(queryset=Enseigne.objects.all(),
                                                widget=forms.CheckboxSelectMultiple)
     rayons = mptt_forms.TreeNodeMultipleChoiceField(queryset=Rayon.objects.all(),
@@ -72,6 +73,7 @@ class CampagnesNew(FormView):
         campagne = Campagne.objects.create(nom=form.cleaned_data['nom'],
                                            annonceur=form.cleaned_data['annonceur'],
                                            user=self.request.user,
+                                           publicite=form.cleaned_data['publicite'],
                                            date_debut=form.cleaned_data['date_debut'],
                                            date_fin=form.cleaned_data['date_fin'])
 
